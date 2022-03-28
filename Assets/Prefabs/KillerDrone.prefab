@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 876627628}
   - component: {fileID: 876627629}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Eye reflection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1214096156}
   - component: {fileID: 1214096157}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Scanner Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ Light:
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 5981645851369595737}
   - component: {fileID: 544452034797485032}
   - component: {fileID: 5732422035270465901}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: KillerDrone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,7 +316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4361558587814139638}
   - component: {fileID: 907326258863806653}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Scanner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
