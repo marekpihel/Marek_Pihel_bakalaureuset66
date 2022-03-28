@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,15 +10,40 @@ public class PlayerMovementController : MonoBehaviour
 
     Vector2 currentMovementInput;
     Vector3 currentMovement;
-    Vector3 currentSprintMovement;
 
     Vector2 currentLookInput;
-    Vector3 currentLook;
-    
 
-    float sprintModifier = 3f;
-    float movementSpeed = 5f;
-    bool isRunPressed;
+    float movementSpeed = 5f, sprintModifier = 1.5f, sneakModifier = 0.5f;
+
+    bool isSprintPressed, isSneakPressed, checkForStandingUp;
+    float upDownAngle = 0f;
+    float mouseSensitivity = 0.1f;
+
+    void initInputSystem(PlayerInputActions.PlayerActions playerActions) {
+        #region Subscriptions
+        #region Movement
+        playerActions.Move.started += onMovementInput;
+        playerActions.Move.canceled += onMovementInput;
+        playerActions.Move.performed += onMovementInput;
+        #endregion
+        #region Sprint
+        playerActions.Sprint.started += onSprint;
+        playerActions.Sprint.canceled += onSprint;
+        playerActions.Sprint.performed += onSprint;
+        #endregion
+        #region Sneak
+        playerActions.Sneak.started += onSneak;
+        playerActions.Sneak.canceled += onSneak;
+        playerActions.Sneak.performed += onSneak;
+        #endregion
+        #region Look
+        playerActions.Look.started += onLookInput;
+        playerActions.Look.canceled += onLookInput;
+        playerActions.Look.performed += onLookInput;
+        #endregion
+        #endregion
+    }
+
 
     private void Awake()
     {
@@ -27,49 +51,98 @@ public class PlayerMovementController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         playerView = GetComponentInChildren<Camera>();
 
-        playerInput.Player.Move.started += onMovementInput;
-        playerInput.Player.Move.canceled += onMovementInput;
-        playerInput.Player.Move.performed += onMovementInput;
-        playerInput.Player.Sprint.started += onSprint;
-        playerInput.Player.Sprint.canceled += onSprint;
-        playerInput.Player.Sprint.performed += onSprint;
-        playerInput.Player.Look.started += onLookInput;
-        playerInput.Player.Look.canceled += onLookInput;
-        playerInput.Player.Look.performed += onLookInput;
-        
+        initInputSystem(playerInput.Player);
     }
 
     void onLookInput(InputAction.CallbackContext context) {
         currentLookInput = context.ReadValue<Vector2>();
-
-        playerView.transform.rotation = playerView.transform.rotation * Quaternion.Euler(currentLookInput.y, 0, 0);
-        transform.rotation = transform.rotation * Quaternion.Euler(0, currentLookInput.x, 0);
+        upDownAngle -= currentLookInput.y * mouseSensitivity;
+        upDownAngle = Mathf.Clamp(upDownAngle, -85, 90);
+        playerView.transform.localRotation = Quaternion.Euler(upDownAngle, 0, 0);
+        transform.rotation = transform.rotation * Quaternion.Euler(0, currentLookInput.x * mouseSensitivity, 0);
     }
 
     void onSprint(InputAction.CallbackContext context) {
-        isRunPressed = context.ReadValueAsButton();
+        isSprintPressed = context.ReadValueAsButton();
+    }
+
+    void onSneak(InputAction.CallbackContext context)
+    {
+        isSneakPressed = context.ReadValueAsButton();
+        if (isSneakPressed)
+        {
+            changeStance(1, new Vector3(1, 0.5f, 1), new Vector3(transform.position.x, 1f, transform.position.z));
+        }
+        else
+        {
+            if (!checkIfAboveClear(transform.position))
+            {
+                isSneakPressed = true;
+                checkForStandingUp = true;
+            }
+            else {
+                changeStance(2, Vector3.one, new Vector3(transform.position.x, 0.5f, transform.position.z));
+
+            }
+        }
+    }
+
+    private bool checkIfAboveClear(Vector3 position)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.up, out hit, 1f))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    void changeStance(int height, Vector3 scale, Vector3 position) {
+        characterController.height = height;
+        transform.localScale = scale;
+        transform.position = position;
     }
 
     void onMovementInput(InputAction.CallbackContext context) {
         currentMovementInput = context.ReadValue<Vector2>();
-        currentMovement.x = currentMovementInput.x * movementSpeed;
-        currentMovement.z = currentMovementInput.y * movementSpeed;
-        currentSprintMovement.x = currentMovementInput.x * movementSpeed * sprintModifier;
-        currentSprintMovement.z = currentMovementInput.y * movementSpeed * sprintModifier;
     }
 
+    void updateCurrentMovement()
+    {
+        Vector3 forwardMovement = transform.forward * currentMovementInput.y;
+        Vector3 sideToSideMovement = transform.right * currentMovementInput.x;
+        Vector3 gravity = transform.up * 3f * -1;
+        currentMovement = (forwardMovement + sideToSideMovement) * movementSpeed * Time.deltaTime + gravity;
+    }
 
 
     // Update is called once per frame
     void Update()
     {
-        if (isRunPressed) {
-            characterController.Move(currentSprintMovement * Time.deltaTime);
-        } else {
-            characterController.Move(currentMovement * Time.deltaTime);
+        updateCurrentMovement();
+        if (checkForStandingUp) {
+            if (checkIfAboveClear(transform.position)) {
+                changeStance(2, Vector3.one, new Vector3(transform.position.x, 0.5f, transform.position.z));
+                checkForStandingUp = false;
+            }
         }
-
+        if (isSprintPressed)
+        {
+            characterController.Move(currentMovement * sprintModifier);
+        }
+        else if (isSneakPressed)
+        {
+            characterController.Move(currentMovement * sneakModifier);
+        }
+        else
+        {
+            characterController.Move(currentMovement);
+        }
     }
+    
 
     void OnEnable()
     {
