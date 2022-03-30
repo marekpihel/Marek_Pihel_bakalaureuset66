@@ -23,11 +23,22 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        LoadLastUIView();
         resolutionDropdown = FindObjectOfType<Dropdown>();
         volumeSlider = FindObjectOfType<Slider>();
         LoadViews();
         DeactivateAllUIViews();
         views[lastUiView].SetActive(true);
+    }
+
+    private void LoadLastUIView()
+    {
+        if (gameManager.GetActiveSceneName() == "StartGameScene") {
+            lastUiView = "mainMenu";
+        }
+        else{
+            lastUiView = "pause";
+        }
     }
 
     private void LoadViews()
@@ -108,5 +119,14 @@ public class UIManager : MonoBehaviour
 
     public void ChangeVolume(Slider volumeSlider) {
         PlayerPrefs.SetFloat("Volume", volumeSlider.value);
+    }
+
+    public void CloseUI() {
+        gameManager.CloseUi();
+    }
+
+    public void LoadMainMenu() {
+        CloseUI();
+        gameManager.LoadMainMenu();
     }
 }

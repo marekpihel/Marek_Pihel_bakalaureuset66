@@ -786,7 +786,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 635222860}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: LoadTestScene
+        m_MethodName: LoadMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2042,7 +2042,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 635222860}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: LoadTestScene
+        m_MethodName: CloseUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
