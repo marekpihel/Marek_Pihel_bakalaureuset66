@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     const int mainMenuSceneNumber = 0, uiSceneNumber = 1, testSceneNumber = 2;
 
     bool menuOpened = false;
+    public static GameManager manager;
+
 
     void Awake()
     {
@@ -60,7 +62,13 @@ public class GameManager : MonoBehaviour
     void OnEnable()
     {
         inputActions.Player.Enable();
-        if(!SceneManager.GetSceneByName("DontDestroyOnLoad").isLoaded)DontDestroyOnLoad(this.gameObject);
+        if (manager == null){
+            manager = this;
+            DontDestroyOnLoad(base.gameObject);
+        }
+        else {
+            Destroy(base.gameObject);
+        }
     }
 
     void OnDisable()
@@ -74,7 +82,6 @@ public class GameManager : MonoBehaviour
     }
 
     public String GetActiveSceneName() {
-        print(SceneManager.GetActiveScene().name);
         return SceneManager.GetActiveScene().name;
     }
 }
