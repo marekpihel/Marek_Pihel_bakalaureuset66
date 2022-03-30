@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     PlayerInputActions inputActions;
-    int uiSceneNumber = 1;
+    const int mainMenuSceneNumber = 0, uiSceneNumber = 1, testSceneNumber = 2;
 
     bool menuOpened = false;
 
@@ -16,21 +16,23 @@ public class GameManager : MonoBehaviour
         inputActions.Player.ToggleMenu.performed += onCancel;
 
 
-        SceneManager.LoadScene(uiSceneNumber, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(uiSceneNumber, LoadSceneMode.Additive);
         DontDestroyOnLoad(this.gameObject);
     }
 
     void onCancel(InputAction.CallbackContext context)
     {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("TestScene"))
+        menuOpened = !menuOpened;
+        if (SceneManager.GetSceneByBuildIndex(mainMenuSceneNumber).isLoaded)
         {
-            menuOpened = !menuOpened;
+            menuOpened = true;
+        }
+        else {
             if (menuOpened)
             {
-                SceneManager.LoadScene(uiSceneNumber, LoadSceneMode.Additive);
+                SceneManager.LoadSceneAsync(uiSceneNumber, LoadSceneMode.Additive);
             }
-            else
-            {
+            else {
                 SceneManager.UnloadSceneAsync(uiSceneNumber);
             }
         }
@@ -38,12 +40,16 @@ public class GameManager : MonoBehaviour
 
     public void LoadTestScene()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadSceneAsync(testSceneNumber);
     }
 
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenUI() {
+        int i = 1 + 1;
     }
 
     void OnEnable()
