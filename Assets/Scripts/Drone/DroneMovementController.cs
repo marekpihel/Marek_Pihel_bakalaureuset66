@@ -9,39 +9,46 @@ public class DroneMovementController : MonoBehaviour
     NavMeshAgent navMeshAgent;
     [SerializeField]
     List<GameObject> patrolPath;
+    [SerializeField]
+    bool search, investigate, patrol, stateChanged;
+    [SerializeField]
+    Vector3 searchingPointOfInterest;
 
     StateMachine stateMachine;
     PatrolState patrolState;
     InvestigateState investigateState;
-    LookAroundState lookAroundState;
     SearchingState searchingState;
+   
+    State previousState;
 
-    [SerializeField]
-    bool search, investigate, lookaround, patrol, stateChanged;
-    State previousStateName;
+    #region Initializing
+    private void InitializeStates()
+    {
+        patrolState = new PatrolState();
+        investigateState = new InvestigateState();
+        searchingState = new SearchingState();
+    }
 
-
-
-
-
-
-
-
+    private void InitializeNavMeshAgent()
+    {
+        patrolState.SetNavMeshAgent(navMeshAgent);
+        searchingState.SetNavMeshAgent(navMeshAgent);
+        investigateState.SetNavMeshAgent(navMeshAgent);
+    }
+    #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         stateMachine = new StateMachine();
-        patrolState = new PatrolState();
-        investigateState = new InvestigateState();
-        lookAroundState = new LookAroundState();
-        searchingState = new SearchingState();
-        patrolState.SetNavMeshAgent(navMeshAgent);
-        searchingState.SetNavMeshAgent(navMeshAgent);
+        InitializeStates();
+        InitializeNavMeshAgent();
+
         patrolState.SetPatrolPath(patrolPath);
         stateMachine.SetCurrentState(patrolState);
-        previousStateName = patrolState;
+        previousState = patrolState;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -49,12 +56,13 @@ public class DroneMovementController : MonoBehaviour
         if (!HasStateChanged(stateMachine.GetCurrentState())) {
             ChangeState();
         }
+        if (stateMachine.GetCurrentState().GetIsFinished()) { patrol = true; }
         stateMachine.GetCurrentState().PerformAction();
     }
 
     private bool HasStateChanged(State currentState)
     {
-        if (!currentState == previousStateName) {
+        if (!currentState == previousState) {
             stateChanged = true;
         }
         return stateChanged;
@@ -62,27 +70,32 @@ public class DroneMovementController : MonoBehaviour
 
     private void ChangeState()
     {
-        stateChanged = false;
+        previousState = stateMachine.GetCurrentState();
         if (search)
         {
             searchingState.GetNavMeshAgent().ResetPath();
+            searchingState.SetPointOfInterest(searchingPointOfInterest);
+            searchingState.SetSearchRadius(5);
             stateMachine.SetCurrentState(searchingState);
-            previousStateName = searchingState;
         }
         else if (investigate)
         {
+            investigateState.GetNavMeshAgent().ResetPath();
+            investigateState.SetPointOfInterest(searchingPointOfInterest);
+            investigateState.SetSearchRadius(5);
+            investigateState.ResetSearchAmount();
+            investigateState.SetIsFinished(false);
             stateMachine.SetCurrentState(investigateState);
-            previousStateName = investigateState;
-        }
-        else if (lookaround)
-        {
-            stateMachine.SetCurrentState(lookAroundState);
-            previousStateName = lookAroundState;
-        }
-        else if (patrol)
+        } else if (patrol)
         {
             stateMachine.SetCurrentState(patrolState);
-            previousStateName = patrolState;
         }
+        ResetStateBooleans();
+    }
+
+
+    private void ResetStateBooleans()
+    {
+        patrol = investigate = search = false;
     }
 }

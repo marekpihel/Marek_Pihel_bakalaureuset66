@@ -1,26 +1,36 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public abstract class State : MonoBehaviour
 {
     private NavMeshAgent navMeshAgent;
+    private bool isFinished;
 
     abstract public void PerformAction();
-    internal Vector3 GetLocation(GameObject gameObject)
+    public Vector3 GetLocation(GameObject gameObject)
     {
         return gameObject.transform.position;
     }
-    internal void SetNavMeshAgent(NavMeshAgent navMeshAgent)
+    public void SetNavMeshAgent(NavMeshAgent navMeshAgent)
     {
         this.navMeshAgent = navMeshAgent;
     }
 
-    internal NavMeshAgent GetNavMeshAgent() {
+    public NavMeshAgent GetNavMeshAgent() {
         return this.navMeshAgent;
+    }
+
+    public void SetIsFinished(bool isFinished) {
+        this.isFinished = isFinished;
     }
 
     internal void GoToLocation(Vector3 position) {
         navMeshAgent.SetDestination(position);
     }
 
+    internal bool GetIsFinished()
+    {
+        return this.isFinished;
+    }
 }

@@ -377,7 +377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4848195268875458614, guid: 45e2992e75570224696e26134a9b378e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05000019
+      value: 1.47
       objectReference: {fileID: 0}
     - target: {fileID: 4848195268875458614, guid: 45e2992e75570224696e26134a9b378e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -416,6 +416,10 @@ PrefabInstance:
       value: KillerDrone
       objectReference: {fileID: 0}
     - target: {fileID: 5732422035270465901, guid: 45e2992e75570224696e26134a9b378e, type: 3}
+      propertyPath: patrol
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5732422035270465901, guid: 45e2992e75570224696e26134a9b378e, type: 3}
       propertyPath: patrolPath.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -427,6 +431,14 @@ PrefabInstance:
       propertyPath: patrolPath.Array.data[1]
       value: 
       objectReference: {fileID: 1282769675}
+    - target: {fileID: 5732422035270465901, guid: 45e2992e75570224696e26134a9b378e, type: 3}
+      propertyPath: searchingPointOfInterest.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5732422035270465901, guid: 45e2992e75570224696e26134a9b378e, type: 3}
+      propertyPath: searchingPointOfInterest.z
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45e2992e75570224696e26134a9b378e, type: 3}
 --- !u!1001 &814916487
@@ -503,7 +515,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &963194226
 AudioListener:
   m_ObjectHideFlags: 0
@@ -546,7 +558,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
+  m_TargetDisplay: 1
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
@@ -705,6 +717,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8506790937014456679, guid: e239f696a554ee64e9505387f81e71db, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8506790937014456679, guid: e239f696a554ee64e9505387f81e71db, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -811,6 +827,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65e4a978f0f73ee45a33da2e813c5c84, type: 3}
+--- !u!1 &1983355468 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5189254277872042636, guid: 45e2992e75570224696e26134a9b378e, type: 3}
+  m_PrefabInstance: {fileID: 680629558}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1983355474
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983355468}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8321774, y: 1.4839199, z: 2.1559083}
+  m_Center: {x: 0, y: 0.053130418, z: 0.30517063}
 --- !u!1 &1988355422
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,9 @@ public class PatrolState : State
         }
     }
 
+    #region Setters
     public void SetPatrolPath(List<GameObject> patrolPath){
         this.patrolPath = patrolPath;
     }
+    #endregion
 }
