@@ -54,12 +54,18 @@ public class PlayerMovementController : MonoBehaviour
         initInputSystem(playerInput.Player);
     }
 
+    #region Input system callbacks
     void onLookInput(InputAction.CallbackContext context) {
         currentLookInput = context.ReadValue<Vector2>();
         upDownAngle -= currentLookInput.y * mouseSensitivity;
         upDownAngle = Mathf.Clamp(upDownAngle, -85, 90);
         playerView.transform.localRotation = Quaternion.Euler(upDownAngle, 0, 0);
         transform.rotation = transform.rotation * Quaternion.Euler(0, currentLookInput.x * mouseSensitivity, 0);
+    }
+
+    void onMovementInput(InputAction.CallbackContext context)
+    {
+        currentMovementInput = context.ReadValue<Vector2>();
     }
 
     void onSprint(InputAction.CallbackContext context) {
@@ -86,7 +92,9 @@ public class PlayerMovementController : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Check for above clear
     private bool checkIfAboveClear(Vector3 position)
     {
         RaycastHit hit;
@@ -99,16 +107,15 @@ public class PlayerMovementController : MonoBehaviour
             return true;
         }
     }
+    #endregion
 
+    #region Change stance
     void changeStance(int height, Vector3 scale, Vector3 position) {
         characterController.height = height;
         transform.localScale = scale;
         transform.position = position;
     }
-
-    void onMovementInput(InputAction.CallbackContext context) {
-        currentMovementInput = context.ReadValue<Vector2>();
-    }
+    #endregion
 
     void updateCurrentMovement()
     {
