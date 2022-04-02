@@ -33,9 +33,13 @@ public class GameManager : MonoBehaviour
             if (menuOpened)
             {
                 if(!SceneManager.GetSceneByBuildIndex(uiSceneNumber).isLoaded) SceneManager.LoadSceneAsync(uiSceneNumber, LoadSceneMode.Additive);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
             }
             else {
                 SceneManager.UnloadSceneAsync(uiSceneNumber);
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
             }
         }
     }
@@ -43,11 +47,15 @@ public class GameManager : MonoBehaviour
     public void LoadTestScene()
     {
         SceneManager.LoadSceneAsync(testSceneNumber);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void CloseUi() {
         menuOpened = false;
         SceneManager.UnloadSceneAsync(uiSceneNumber);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void ExitGame()
@@ -79,6 +87,8 @@ public class GameManager : MonoBehaviour
     internal void LoadMainMenu()
     {
         SceneManager.LoadSceneAsync(mainMenuSceneNumber, LoadSceneMode.Single);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     public String GetActiveSceneName() {
