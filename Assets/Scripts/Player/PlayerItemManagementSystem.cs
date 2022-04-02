@@ -4,12 +4,12 @@ public class PlayerItemManagementSystem : MonoBehaviour
 {
     [SerializeField]
     Transform handLocation;
-    Slot handSlot;
+    ItemSlot handSlot;
     
 
     private void Awake()
     {
-        handSlot = new Slot();
+        handSlot = new ItemSlot();
     }
 
     private void OnTriggerEnter(Collider other)

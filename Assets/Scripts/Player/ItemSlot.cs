@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Slot : MonoBehaviour
+public class ItemSlot : MonoBehaviour
 {
     GameObject itemInHand;
 
