@@ -19,5 +19,9 @@ public class ItemSlot : MonoBehaviour
         }
     }
 
+    public void RemoveItemFromHand() {
+        itemInHand = null;
+    }
+
 
 }

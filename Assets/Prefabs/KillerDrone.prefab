@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 876627627}
   m_LocalRotation: {x: -1, y: -0, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: -0.0017142465, z: 1.0328751}
+  m_LocalPosition: {x: 0, y: -0.097, z: 1.0582}
   m_LocalScale: {x: 0.28571427, y: 0.28571427, z: 0.125}
   m_Children: []
   m_Father: {fileID: 4361558587814139638}
@@ -44,7 +44,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.0990566, g: 0.14866826, b: 1, a: 1}
   m_Intensity: 999
-  m_Range: 0.1
+  m_Range: 0.2
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 5981645851369595737}
   - component: {fileID: 544452034797485032}
   - component: {fileID: 5732422035270465901}
+  - component: {fileID: 205702613}
   m_Layer: 7
   m_Name: KillerDrone
   m_TagString: Untagged
@@ -305,12 +306,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navMeshAgent: {fileID: 544452034797485032}
-  patrolPath: []
+  patrolPath:
+  - {fileID: 0}
+  - {fileID: 0}
   search: 0
   investigate: 0
   patrol: 0
   stateChanged: 0
   searchingPointOfInterest: {x: 0, y: 0, z: 0}
+--- !u!65 &205702613
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5189254277872042636}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8321774, y: 1.4839199, z: 2.1559083}
+  m_Center: {x: 0, y: 0.053130418, z: 0.30517063}
 --- !u!1 &5751894358857318037
 GameObject:
   m_ObjectHideFlags: 0
