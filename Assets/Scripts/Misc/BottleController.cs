@@ -8,7 +8,7 @@ public class BottleController : MonoBehaviour
     Rigidbody rigibody;
     bool isThrown = false, expandingArea = false;
     private float expandingSpeed = 100f;
-    private float maxExpansionArea = 10f;
+    private float maxExpansionArea = 20f;
 
     private void Awake()
     {
