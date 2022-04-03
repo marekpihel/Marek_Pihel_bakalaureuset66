@@ -20,8 +20,10 @@ public class PlayerItemManagementSystem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Bottle") {
-            PickupItem(other.gameObject);
+        if (other.tag == "Bottle"){
+            if (!other.GetComponent<BottleController>().HasBeenThrow()) {
+                PickupItem(other.gameObject);
+            }
         }
     }
 
@@ -34,7 +36,7 @@ public class PlayerItemManagementSystem : MonoBehaviour
     {
         handSlot.SetItemInHand(gameObject);
         handSlot.GetItemInHand().GetComponent<BoxCollider>().size = new Vector3(0.23f, 1, 0.23f);
-        handSlot.GetItemInHand().GetComponent<BoxCollider>().isTrigger = false;
+        //handSlot.GetItemInHand().GetComponent<BoxCollider>().isTrigger = false;
         handSlot.GetItemInHand().GetComponent<Rigidbody>().isKinematic = true;
         SetItemLocation(handLocation);
     }

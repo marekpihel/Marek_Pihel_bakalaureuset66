@@ -37,6 +37,8 @@ public class DroneMovementController : MonoBehaviour
     }
     #endregion
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -97,5 +99,10 @@ public class DroneMovementController : MonoBehaviour
     private void ResetStateBooleans()
     {
         patrol = investigate = search = false;
+    }
+
+    internal void InvestigatePoint()
+    {
+        print("Drone " + this.name + " investigating point");
     }
 }
