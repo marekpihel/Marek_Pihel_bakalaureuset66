@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -60,11 +59,13 @@ public class PlayerMovementController : MonoBehaviour
 
     #region Input system callbacks
     void onLookInput(InputAction.CallbackContext context) {
-        currentLookInput = context.ReadValue<Vector2>();
-        upDownAngle -= currentLookInput.y * mouseSensitivity;
-        upDownAngle = Mathf.Clamp(upDownAngle, -85, 90);
-        playerView.transform.localRotation = Quaternion.Euler(upDownAngle, 0, 0);
-        transform.rotation = transform.rotation * Quaternion.Euler(0, currentLookInput.x * mouseSensitivity, 0);
+        if (!GameManager.menuOpened) {
+            currentLookInput = context.ReadValue<Vector2>();
+            upDownAngle -= currentLookInput.y * mouseSensitivity;
+            upDownAngle = Mathf.Clamp(upDownAngle, -85, 90);
+            playerView.transform.localRotation = Quaternion.Euler(upDownAngle, 0, 0);
+            transform.rotation = transform.rotation * Quaternion.Euler(0, currentLookInput.x * mouseSensitivity, 0);
+        }
     }
 
     void onMovementInput(InputAction.CallbackContext context)
@@ -133,33 +134,35 @@ public class PlayerMovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        updateCurrentMovement();
-        if (checkForStandingUp)
-        {
-            if (checkIfAboveClear(transform.position))
+        if (!GameManager.menuOpened) {
+            updateCurrentMovement();
+            if (checkForStandingUp)
             {
-                changeStance(2, Vector3.one, new Vector3(transform.position.x, 0.5f, transform.position.z));
-                checkForStandingUp = false;
-                isSneakPressed = false;
+                if (checkIfAboveClear(transform.position))
+                {
+                    changeStance(2, Vector3.one, new Vector3(transform.position.x, 0.5f, transform.position.z));
+                    checkForStandingUp = false;
+                    isSneakPressed = false;
+                }
             }
-        }
-        if (currentMovementInput.magnitude == 0)
-        {
-            ChangeFootstepRange(0);
-        }
-        else
-        {
-            if (isSprintPressed)
+            if (currentMovementInput.magnitude == 0)
             {
-                characterController.Move(currentMovement * sprintModifier);
-                ChangeFootstepRange(sprintModifier);
-            } else if (isSneakPressed) {
-                characterController.Move(currentMovement * sneakModifier);
-                ChangeFootstepRange(sneakModifier);
+                ChangeFootstepRange(0);
+            }
+            else
+            {
+                if (isSprintPressed)
+                {
+                    characterController.Move(currentMovement * sprintModifier);
+                    ChangeFootstepRange(sprintModifier);
+                } else if (isSneakPressed) {
+                    characterController.Move(currentMovement * sneakModifier);
+                    ChangeFootstepRange(sneakModifier);
 
-            } else {
-                characterController.Move(currentMovement);
-                ChangeFootstepRange(1);
+                } else {
+                    characterController.Move(currentMovement);
+                    ChangeFootstepRange(1);
+                }
             }
         }
     }

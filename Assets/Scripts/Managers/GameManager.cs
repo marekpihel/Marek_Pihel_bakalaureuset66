@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     PlayerInputActions inputActions;
     const int mainMenuSceneNumber = 0, uiSceneNumber = 1, testSceneNumber = 2;
 
-    bool menuOpened = false;
+    public static bool menuOpened = false;
     public static GameManager manager;
 
 
@@ -37,9 +37,7 @@ public class GameManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Confined;
             }
             else {
-                SceneManager.UnloadSceneAsync(uiSceneNumber);
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
+                CloseUi();
             }
         }
     }
@@ -53,9 +51,9 @@ public class GameManager : MonoBehaviour
 
     public void CloseUi() {
         menuOpened = false;
-        SceneManager.UnloadSceneAsync(uiSceneNumber);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        SceneManager.UnloadSceneAsync(uiSceneNumber);
     }
 
     public void ExitGame()

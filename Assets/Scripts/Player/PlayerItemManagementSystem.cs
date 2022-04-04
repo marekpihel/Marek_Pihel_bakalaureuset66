@@ -7,7 +7,6 @@ public class PlayerItemManagementSystem : MonoBehaviour
     Transform handLocation;
     ItemSlot handSlot;
     PlayerInputActions inputActions;
-    bool isFirePressed = false;
     
 
     private void Awake()
@@ -29,7 +28,9 @@ public class PlayerItemManagementSystem : MonoBehaviour
 
     void onThrowingInitiated(InputAction.CallbackContext context)
     {
-        ThrowItem();
+        if (!GameManager.menuOpened) {
+            ThrowItem();
+        }
     }
 
     private void PickupItem(GameObject gameObject)

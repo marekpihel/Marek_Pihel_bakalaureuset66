@@ -43,7 +43,6 @@ public class DroneMovementController : MonoBehaviour
         stateMachine = new StateMachine();
         InitializeStates();
         InitializeNavMeshAgent();
-
         patrolState.SetPatrolPath(patrolPath);
         stateMachine.SetCurrentState(patrolState);
         previousState = patrolState;
@@ -53,11 +52,16 @@ public class DroneMovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!HasStateChanged(stateMachine.GetCurrentState())) {
-            ChangeState();
+        if (!GameManager.menuOpened) {
+            stateMachine.GetCurrentState().GetNavMeshAgent().isStopped = false;
+            if (!HasStateChanged(stateMachine.GetCurrentState())) {
+                ChangeState();
+            } 
+            if (stateMachine.GetCurrentState().GetIsFinished()) { patrol = true; }
+            stateMachine.GetCurrentState().PerformAction();
+        } else {
+            stateMachine.GetCurrentState().GetNavMeshAgent().isStopped = true;
         }
-        if (stateMachine.GetCurrentState().GetIsFinished()) { patrol = true; }
-        stateMachine.GetCurrentState().PerformAction();
     }
 
     private bool HasStateChanged(State currentState)
@@ -71,23 +75,19 @@ public class DroneMovementController : MonoBehaviour
     private void ChangeState()
     {
         previousState = stateMachine.GetCurrentState();
-        if (search)
-        {
+        if (search){
             searchingState.GetNavMeshAgent().ResetPath();
             searchingState.SetPointOfInterest(pointOfInterest);
             searchingState.SetSearchRadius(5);
             stateMachine.SetCurrentState(searchingState);
-        }
-        else if (investigate)
-        {
+        } else if (investigate) {
             investigateState.GetNavMeshAgent().ResetPath();
             investigateState.SetPointOfInterest(pointOfInterest);
             investigateState.SetSearchRadius(5);
             investigateState.ResetSearchAmount();
             investigateState.SetIsFinished(false);
             stateMachine.SetCurrentState(investigateState);
-        } else if (patrol)
-        {
+        } else if (patrol) {
             stateMachine.SetCurrentState(patrolState);
         }
         ResetStateBooleans();
