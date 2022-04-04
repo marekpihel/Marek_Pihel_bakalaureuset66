@@ -8,10 +8,9 @@ public class DroneMovementController : MonoBehaviour
     NavMeshAgent navMeshAgent;
     [SerializeField]
     List<GameObject> patrolPath;
-    [SerializeField]
+
     bool search, investigate, patrol, stateChanged;
-    [SerializeField]
-    Vector3 searchingPointOfInterest;
+    Vector3 pointOfInterest;
 
     StateMachine stateMachine;
     PatrolState patrolState;
@@ -75,14 +74,14 @@ public class DroneMovementController : MonoBehaviour
         if (search)
         {
             searchingState.GetNavMeshAgent().ResetPath();
-            searchingState.SetPointOfInterest(searchingPointOfInterest);
+            searchingState.SetPointOfInterest(pointOfInterest);
             searchingState.SetSearchRadius(5);
             stateMachine.SetCurrentState(searchingState);
         }
         else if (investigate)
         {
             investigateState.GetNavMeshAgent().ResetPath();
-            investigateState.SetPointOfInterest(searchingPointOfInterest);
+            investigateState.SetPointOfInterest(pointOfInterest);
             investigateState.SetSearchRadius(5);
             investigateState.ResetSearchAmount();
             investigateState.SetIsFinished(false);
@@ -100,8 +99,10 @@ public class DroneMovementController : MonoBehaviour
         patrol = investigate = search = false;
     }
 
-    internal void InvestigatePoint()
+    internal void InvestigatePoint(Vector3 position)
     {
-        print("Drone " + this.name + " investigating point");
+        pointOfInterest = position;
+        investigate = true;
+        stateMachine.SetCurrentState(investigateState);
     }
 }

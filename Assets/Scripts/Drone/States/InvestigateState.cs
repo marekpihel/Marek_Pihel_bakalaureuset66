@@ -3,7 +3,7 @@ using UnityEngine;
 public class InvestigateState : State
 {
     Vector3 pointOfIntetest;
-    int searchRadius, maxSearchAmount = 5, searchedTimes = 5;
+    int searchRadius = 1, maxSearchAmount = 3, searchedTimes = 3;
     float investigationCooldown = 3, investigatedTime = 0, turningSpeed = 50;
 
     public override void PerformAction()

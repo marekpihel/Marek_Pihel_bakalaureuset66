@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,8 @@ public class PlayerMovementController : MonoBehaviour
     PlayerInputActions playerInput;
     CharacterController characterController;
     Camera playerView;
+    [SerializeField]
+    VirtualFootStepSound virtualFootStepSound;
 
     Vector2 currentMovementInput;
     Vector3 currentMovement;
@@ -13,8 +16,10 @@ public class PlayerMovementController : MonoBehaviour
     Vector2 currentLookInput;
 
     float movementSpeed = 5f, sprintModifier = 1.5f, sneakModifier = 0.5f;
+    
 
     bool isSprintPressed, isSneakPressed, checkForStandingUp;
+
     float upDownAngle = 0f;
     float mouseSensitivity = 0.1f;
 
@@ -129,26 +134,40 @@ public class PlayerMovementController : MonoBehaviour
     void Update()
     {
         updateCurrentMovement();
-        if (checkForStandingUp) {
-            if (checkIfAboveClear(transform.position)) {
+        if (checkForStandingUp)
+        {
+            if (checkIfAboveClear(transform.position))
+            {
                 changeStance(2, Vector3.one, new Vector3(transform.position.x, 0.5f, transform.position.z));
                 checkForStandingUp = false;
+                isSneakPressed = false;
             }
         }
-        if (isSprintPressed)
+        if (currentMovementInput.magnitude == 0)
         {
-            characterController.Move(currentMovement * sprintModifier);
-        }
-        else if (isSneakPressed)
-        {
-            characterController.Move(currentMovement * sneakModifier);
+            ChangeFootstepRange(0);
         }
         else
         {
-            characterController.Move(currentMovement);
+            if (isSprintPressed)
+            {
+                characterController.Move(currentMovement * sprintModifier);
+                ChangeFootstepRange(sprintModifier);
+            } else if (isSneakPressed) {
+                characterController.Move(currentMovement * sneakModifier);
+                ChangeFootstepRange(sneakModifier);
+
+            } else {
+                characterController.Move(currentMovement);
+                ChangeFootstepRange(1);
+            }
         }
     }
-    
+
+    private void ChangeFootstepRange(float modifier)
+    {
+        virtualFootStepSound.ChangeFootstepHeardRange(modifier);
+    }
 
     void OnEnable()
     {
