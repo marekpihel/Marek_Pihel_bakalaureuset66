@@ -49,7 +49,7 @@ public class BottleController : MonoBehaviour
 
     private void NotifyClosestEnemy(Collider droneCollider)
     {
-        droneCollider.GetComponent<DroneMovementController>().InvestigatePoint();
+        droneCollider.GetComponent<DroneMovementController>().InvestigatePoint(this.gameObject.transform.position);
     }
 
     private void BreakBottle()

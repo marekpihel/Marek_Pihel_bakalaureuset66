@@ -230,6 +230,7 @@ GameObject:
   - component: {fileID: 544452034797485032}
   - component: {fileID: 5732422035270465901}
   - component: {fileID: 205702613}
+  - component: {fileID: 611579336}
   m_Layer: 7
   m_Name: KillerDrone
   m_TagString: Drone
@@ -313,15 +314,15 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 1.5
   m_Speed: 5
-  m_Acceleration: 200
+  m_Acceleration: 900
   avoidancePriority: 50
-  m_AngularSpeed: 1200
+  m_AngularSpeed: 360
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: 1.5
+  m_BaseOffset: 1.4
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &5732422035270465901
@@ -340,11 +341,8 @@ MonoBehaviour:
   patrolPath:
   - {fileID: 0}
   - {fileID: 0}
-  search: 0
-  investigate: 0
-  patrol: 0
-  stateChanged: 0
-  searchingPointOfInterest: {x: 0, y: 0, z: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!65 &205702613
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -356,8 +354,24 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.8321774, y: 1.4839199, z: 2.1559083}
-  m_Center: {x: 0, y: 0.053130418, z: 0.30517063}
+  m_Size: {x: 2.8321774, y: 0.5, z: 2.1559083}
+  m_Center: {x: 0, y: 0.5, z: 0.30517063}
+--- !u!54 &611579336
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5189254277872042636}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &5751894358857318037
 GameObject:
   m_ObjectHideFlags: 0
