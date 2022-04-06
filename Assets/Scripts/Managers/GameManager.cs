@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     const int mainMenuSceneNumber = 0, uiSceneNumber = 1, testSceneNumber = 2;
 
     public static bool menuOpened = false;
-    public static GameManager manager;
+    public static GameManager gameManager;
 
 
     void Awake()
@@ -44,7 +44,10 @@ public class GameManager : MonoBehaviour
 
     public void LoadTestScene()
     {
-        SceneManager.LoadSceneAsync(testSceneNumber);
+        if (FindObjectOfType<DroneSuspicionManager>() != null) {
+            FindObjectOfType<DroneSuspicionManager>().ResetTimesSoundHeard();
+        }
+        SceneManager.LoadScene(testSceneNumber);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -68,8 +71,8 @@ public class GameManager : MonoBehaviour
     void OnEnable()
     {
         inputActions.Player.Enable();
-        if (manager == null){
-            manager = this;
+        if (gameManager == null){
+            gameManager = this;
             DontDestroyOnLoad(base.gameObject);
         }
         else {
@@ -84,7 +87,7 @@ public class GameManager : MonoBehaviour
 
     internal void LoadMainMenu()
     {
-        SceneManager.LoadSceneAsync(mainMenuSceneNumber, LoadSceneMode.Single);
+        SceneManager.LoadScene(mainMenuSceneNumber);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
     }

@@ -18,13 +18,16 @@ public class DroneMovementController : MonoBehaviour
     SearchingState searchingState;
    
     State previousState;
+    
+
+    DroneSuspicionManager droneSuspicionManager;
 
     #region Initializing
     private void InitializeStates()
     {
-        patrolState = new PatrolState();
-        investigateState = new InvestigateState();
-        searchingState = new SearchingState();
+        patrolState = new PatrolState("Patrolling");
+        investigateState = new InvestigateState("Investigating");
+        searchingState = new SearchingState("Searching");
     }
 
     private void InitializeNavMeshAgent()
@@ -41,6 +44,7 @@ public class DroneMovementController : MonoBehaviour
     void Start()
     {
         stateMachine = new StateMachine();
+        droneSuspicionManager = FindObjectOfType<DroneSuspicionManager>();
         InitializeStates();
         InitializeNavMeshAgent();
         patrolState.SetPatrolPath(patrolPath);
@@ -52,6 +56,7 @@ public class DroneMovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        print("State: " + stateMachine.GetCurrentState().GetName());
         if (!GameManager.menuOpened) {
             stateMachine.GetCurrentState().GetNavMeshAgent().isStopped = false;
             if (!HasStateChanged(stateMachine.GetCurrentState())) {
@@ -102,7 +107,34 @@ public class DroneMovementController : MonoBehaviour
     internal void InvestigatePoint(Vector3 position)
     {
         pointOfInterest = position;
-        investigate = true;
-        stateMachine.SetCurrentState(investigateState);
+        if (GetStateName() == "Searching")
+        {
+            stateMachine.SetCurrentState(searchingState);
+            search = true;
+        }
+        else
+        {
+            stateMachine.SetCurrentState(investigateState);
+            investigate = true;
+        }
+        droneSuspicionManager.heardSound(position);
+        ChangeState();
+    }
+    internal void ChangeToSearchingState(Vector3 location)
+    {
+        pointOfInterest = (location + transform.position) / 2;
+        search = true;
+        stateMachine.SetCurrentState(searchingState);
+        ChangeState();
+    }
+
+    public string GetStateName() {
+        if (stateMachine.GetCurrentState() == searchingState) {
+            return "Searching";
+        } else if (stateMachine.GetCurrentState() == investigateState) {
+            return "Investigating";
+        } else {
+            return "Patrolling";
+        }
     }
 }

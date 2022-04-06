@@ -6,6 +6,10 @@ public class InvestigateState : State
     int searchRadius = 1, maxSearchAmount = 3, searchedTimes = 3;
     float investigationCooldown = 3, investigatedTime = 0, turningSpeed = 50;
 
+    public InvestigateState(string stateName) {
+        base.SetName(stateName);
+    }
+
     public override void PerformAction()
     {
         if (!GetNavMeshAgent().hasPath)
@@ -57,6 +61,8 @@ public class InvestigateState : State
     public void SetPointOfInterest(Vector3 newPointOfInterest)
     {
         this.pointOfIntetest = newPointOfInterest;
+
+
     }
 
     public void SetSearchRadius(int searchRadius)

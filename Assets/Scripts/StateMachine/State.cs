@@ -5,8 +5,12 @@ public abstract class State : MonoBehaviour
 {
     private NavMeshAgent navMeshAgent;
     private bool isFinished;
+    string stateName;
 
     abstract public void PerformAction();
+    public string GetName() { return stateName; }
+    public void SetName(string stateName) { this.stateName = stateName; }
+
     public Vector3 GetLocation(GameObject gameObject)
     {
         return gameObject.transform.position;
