@@ -1,11 +1,16 @@
+using System;
 using UnityEngine;
 
 public class SearchingState : State
 {
     Vector3 pointOfIntetest;
-    int searchRadius;
-    float investigationCooldown = 3, investigatedTime = 0;
+    int searchRadius = 1;
+    float investigationCooldown = 3, investigatedTime = 0, turningSpeed = 50;
 
+    public SearchingState(string stateName)
+    {
+        base.SetName(stateName);
+    }
 
     public override void PerformAction()
     {
@@ -17,14 +22,39 @@ public class SearchingState : State
                 Vector3 nextDest = GetRandomPointInsideSearchArea();
                 GoToLocation(nextDest);
             }
+            LookAround();
             investigatedTime -= Time.deltaTime;
         }
     }
+
+    #region Initialize search parameters
+    internal void InitializeSearchParameters(Vector3 pointOfInterest, int searchRadius)
+    {
+        GetNavMeshAgent().ResetPath();
+        pointOfIntetest = pointOfInterest;
+        SetSearchRadius(searchRadius);
+    }
+    #endregion
 
     #region Expand search area
     private void ExpandSearchArea()
     {
         searchRadius += 1;
+    }
+    #endregion
+
+    #region Look around
+    private void LookAround()
+    {
+        Transform droneTransform = GetNavMeshAgent().gameObject.transform;
+        if (investigatedTime > investigationCooldown * 2 / 3)
+        {
+            droneTransform.Rotate(Vector3.up, turningSpeed * Time.deltaTime);
+        }
+        else
+        {
+            droneTransform.Rotate(Vector3.down, turningSpeed * Time.deltaTime);
+        }
     }
     #endregion
 

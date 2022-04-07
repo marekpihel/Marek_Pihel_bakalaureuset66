@@ -19,7 +19,7 @@ public class VirtualFootStepSound : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Drone") {
-            other.GetComponent<DroneMovementController>().InvestigatePoint(this.transform.position);
+            other.GetComponent<DroneBehaviourController>().InvestigatePoint(this.transform.position);
         }
     }
 

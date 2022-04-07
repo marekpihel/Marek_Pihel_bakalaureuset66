@@ -8,6 +8,10 @@ public class PatrolState : State
 
     int currentPoint;
 
+    public PatrolState(string stateName) {
+        base.SetName(stateName);
+    }
+
     public void Awake()
     {
         GoToLocation(GetLocation(patrolPath[currentPoint]));

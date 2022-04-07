@@ -33,6 +33,7 @@ public class BottleController : MonoBehaviour
             expandingArea = false;
             NotifyClosestEnemy(collider);
             BreakBottle();
+
         }
     }
 
@@ -49,7 +50,8 @@ public class BottleController : MonoBehaviour
 
     private void NotifyClosestEnemy(Collider droneCollider)
     {
-        droneCollider.GetComponent<DroneMovementController>().InvestigatePoint(this.gameObject.transform.position);
+        DroneBehaviourController droneController = droneCollider.GetComponent<DroneBehaviourController>();
+        droneController.InvestigatePoint(this.gameObject.transform.position);
     }
 
     private void BreakBottle()

@@ -123,6 +123,8 @@ public class UIManager : MonoBehaviour
 
     public void CloseUI() {
         gameManager.CloseUi();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void LoadMainMenu() {
