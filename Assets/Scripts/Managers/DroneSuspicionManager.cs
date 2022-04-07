@@ -1,19 +1,21 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DroneSuspicionManager : MonoBehaviour
 {
     public static DroneSuspicionManager suspicionManager;
-    List<DroneMovementController> drones;
+    List<DroneBehaviourController> drones;
     Vector3 lastPosition;
-    int changeStateSoundAmount = 2;
+    int changeStateSoundAmount = 5;
     int timesSoundHeard = 0;
-    float soundHeardReductionCooldown = 5f;
+    float soundReactionDistance = 10f;
+    float soundHeardReductionCooldown = 15f;
     float timeUntilSoundHeardReduction = 0f;
 
     void OnEnable()
     {
-        drones = new List<DroneMovementController>();
+        drones = new List<DroneBehaviourController>();
         if (suspicionManager == null)
         {
             suspicionManager = this;
@@ -27,8 +29,9 @@ public class DroneSuspicionManager : MonoBehaviour
 
     public void ReloadDrones() {
         drones.Clear();
-        foreach (DroneMovementController droneController in FindObjectsOfType<DroneMovementController>())
+        foreach (DroneBehaviourController droneController in FindObjectsOfType<DroneBehaviourController>())
         {
+            droneController.ResetState();
             drones.Add(droneController);
         }
     }
@@ -40,14 +43,25 @@ public class DroneSuspicionManager : MonoBehaviour
     public void heardSound(Vector3 soundHeardPosition) {
         ReloadDrones();
         lastPosition = soundHeardPosition;
+        AlertCloseDrones();
         timesSoundHeard += 1;
         checkForAlterState();
+    }
+
+    private void AlertCloseDrones()
+    {
+        foreach (DroneBehaviourController droneController in drones)
+        {
+            if (droneController.InAlertRange(lastPosition, soundReactionDistance)) {
+                droneController.ReactToSound(lastPosition);
+            }
+        }
     }
 
     private void checkForAlterState()
     {
         if (timesSoundHeard >= changeStateSoundAmount) {
-            foreach (DroneMovementController droneController in drones) {
+            foreach (DroneBehaviourController droneController in drones) {
                 droneController.ChangeToSearchingState(lastPosition);
             }
         }
@@ -64,5 +78,8 @@ public class DroneSuspicionManager : MonoBehaviour
             }
         }
     }
+
+    public float GetRangeFromSoundToReact() { return soundReactionDistance; }
+
 
 }

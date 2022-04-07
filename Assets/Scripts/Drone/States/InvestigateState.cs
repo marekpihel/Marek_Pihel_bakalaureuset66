@@ -71,9 +71,14 @@ public class InvestigateState : State
     }
     #endregion
 
-    #region Reseting search amounts
-    public void ResetSearchAmount() {
+    #region Initialize search parameters
+    public void InitializeSearchParameters(Vector3 pointOfInterest, int searchRadius) {
+        GetNavMeshAgent().ResetPath();
         searchedTimes = maxSearchAmount;
+        investigatedTime = 0;
+        SetIsFinished(false);
+        pointOfIntetest = pointOfInterest;
+        SetSearchRadius(searchRadius);
     }
     #endregion
 

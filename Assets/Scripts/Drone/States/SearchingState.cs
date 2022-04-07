@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SearchingState : State
@@ -25,6 +26,15 @@ public class SearchingState : State
             investigatedTime -= Time.deltaTime;
         }
     }
+
+    #region Initialize search parameters
+    internal void InitializeSearchParameters(Vector3 pointOfInterest, int searchRadius)
+    {
+        GetNavMeshAgent().ResetPath();
+        pointOfIntetest = pointOfInterest;
+        SetSearchRadius(searchRadius);
+    }
+    #endregion
 
     #region Expand search area
     private void ExpandSearchArea()

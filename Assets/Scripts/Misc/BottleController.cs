@@ -50,7 +50,7 @@ public class BottleController : MonoBehaviour
 
     private void NotifyClosestEnemy(Collider droneCollider)
     {
-        DroneMovementController droneController = droneCollider.GetComponent<DroneMovementController>();
+        DroneBehaviourController droneController = droneCollider.GetComponent<DroneBehaviourController>();
         droneController.InvestigatePoint(this.gameObject.transform.position);
     }
 

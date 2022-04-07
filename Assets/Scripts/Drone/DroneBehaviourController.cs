@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DroneMovementController : MonoBehaviour
+public class DroneBehaviourController : MonoBehaviour
 {
     [SerializeField]
     NavMeshAgent navMeshAgent;
@@ -18,11 +18,12 @@ public class DroneMovementController : MonoBehaviour
     SearchingState searchingState;
    
     State previousState;
-    
 
     DroneSuspicionManager droneSuspicionManager;
 
-    #region Initializing
+    int searchRadius = 5;
+
+    #region Initialize states and navmeshes
     private void InitializeStates()
     {
         patrolState = new PatrolState("Patrolling");
@@ -38,8 +39,6 @@ public class DroneMovementController : MonoBehaviour
     }
     #endregion
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -47,21 +46,22 @@ public class DroneMovementController : MonoBehaviour
         droneSuspicionManager = FindObjectOfType<DroneSuspicionManager>();
         InitializeStates();
         InitializeNavMeshAgent();
+        ResetState();
+    }
+
+    internal void ResetState()
+    {
         patrolState.SetPatrolPath(patrolPath);
         stateMachine.SetCurrentState(patrolState);
         previousState = patrolState;
     }
 
-
     // Update is called once per frame
     void Update()
     {
-        print("State: " + stateMachine.GetCurrentState().GetName());
         if (!GameManager.menuOpened) {
             stateMachine.GetCurrentState().GetNavMeshAgent().isStopped = false;
-            if (!HasStateChanged(stateMachine.GetCurrentState())) {
-                ChangeState();
-            } 
+            if (!HasStateChanged(stateMachine.GetCurrentState())) { ChangeState(); } 
             if (stateMachine.GetCurrentState().GetIsFinished()) { patrol = true; }
             stateMachine.GetCurrentState().PerformAction();
         } else {
@@ -81,16 +81,10 @@ public class DroneMovementController : MonoBehaviour
     {
         previousState = stateMachine.GetCurrentState();
         if (search){
-            searchingState.GetNavMeshAgent().ResetPath();
-            searchingState.SetPointOfInterest(pointOfInterest);
-            searchingState.SetSearchRadius(5);
+            searchingState.InitializeSearchParameters(pointOfInterest, searchRadius);
             stateMachine.SetCurrentState(searchingState);
         } else if (investigate) {
-            investigateState.GetNavMeshAgent().ResetPath();
-            investigateState.SetPointOfInterest(pointOfInterest);
-            investigateState.SetSearchRadius(5);
-            investigateState.ResetSearchAmount();
-            investigateState.SetIsFinished(false);
+            investigateState.InitializeSearchParameters(pointOfInterest, searchRadius);
             stateMachine.SetCurrentState(investigateState);
         } else if (patrol) {
             stateMachine.SetCurrentState(patrolState);
@@ -106,6 +100,13 @@ public class DroneMovementController : MonoBehaviour
 
     internal void InvestigatePoint(Vector3 position)
     {
+        SetupPointOfIntrestAndTransitionToDiffState(position);
+        droneSuspicionManager.heardSound(position);
+        ChangeState();
+    }
+
+    private void SetupPointOfIntrestAndTransitionToDiffState(Vector3 position)
+    {
         pointOfInterest = position;
         if (GetStateName() == "Searching")
         {
@@ -117,9 +118,18 @@ public class DroneMovementController : MonoBehaviour
             stateMachine.SetCurrentState(investigateState);
             investigate = true;
         }
-        droneSuspicionManager.heardSound(position);
-        ChangeState();
     }
+
+    internal bool InAlertRange(Vector3 lastPosition, float soundReactionDistance)
+    {
+        return Vector3.Distance(transform.position, lastPosition) <= soundReactionDistance;
+    }
+
+    internal void ReactToSound(Vector3 position)
+    {
+        SetupPointOfIntrestAndTransitionToDiffState(position);
+    }
+
     internal void ChangeToSearchingState(Vector3 location)
     {
         pointOfInterest = (location + transform.position) / 2;
