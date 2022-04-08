@@ -21,7 +21,9 @@ public class SearchingState : State
                 Vector3 nextDest = GetRandomPointInsideSearchArea();
                 GoToLocation(nextDest);
             }
-            LookAround();
+            if (investigatedTime >= 0) { 
+                LookAround();
+            }
             investigatedTime -= Time.deltaTime;
         }
     }

@@ -62,8 +62,15 @@ public class DroneBehaviourController : MonoBehaviour
         if (!GameManager.menuOpened)
         {
             stateMachine.GetCurrentState().GetNavMeshAgent().isStopped = false;
-            if (!HasStateChanged(stateMachine.GetCurrentState())) { ChangeState(); }
-            if (stateMachine.GetCurrentState().GetIsFinished()) { patrol = true; }
+            if (!HasStateChanged(stateMachine.GetCurrentState())) 
+            {
+                ChangeState();
+            }
+            if (stateMachine.GetCurrentState().GetIsFinished())
+            {
+                patrol = true;
+                droneSuspicionManager.RemoveDroneFromReacting(this);
+            }
             stateMachine.GetCurrentState().PerformAction();
         }
         else
@@ -110,7 +117,7 @@ public class DroneBehaviourController : MonoBehaviour
     internal void InvestigatePoint(Vector3 position)
     {
         SetupPointOfIntrestAndTransitionToDiffState(position);
-        droneSuspicionManager.heardSound(position);
+        droneSuspicionManager.heardSound(position, this);
         ChangeState();
     }
 
