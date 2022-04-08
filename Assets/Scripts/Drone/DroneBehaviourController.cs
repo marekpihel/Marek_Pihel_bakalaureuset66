@@ -16,7 +16,7 @@ public class DroneBehaviourController : MonoBehaviour
     PatrolState patrolState;
     InvestigateState investigateState;
     SearchingState searchingState;
-   
+
     State previousState;
 
     DroneSuspicionManager droneSuspicionManager;
@@ -59,19 +59,23 @@ public class DroneBehaviourController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.menuOpened) {
+        if (!GameManager.menuOpened)
+        {
             stateMachine.GetCurrentState().GetNavMeshAgent().isStopped = false;
-            if (!HasStateChanged(stateMachine.GetCurrentState())) { ChangeState(); } 
+            if (!HasStateChanged(stateMachine.GetCurrentState())) { ChangeState(); }
             if (stateMachine.GetCurrentState().GetIsFinished()) { patrol = true; }
             stateMachine.GetCurrentState().PerformAction();
-        } else {
+        }
+        else
+        {
             stateMachine.GetCurrentState().GetNavMeshAgent().isStopped = true;
         }
     }
 
     private bool HasStateChanged(State currentState)
     {
-        if (!currentState == previousState) {
+        if (!currentState == previousState)
+        {
             stateChanged = true;
         }
         return stateChanged;
@@ -80,13 +84,18 @@ public class DroneBehaviourController : MonoBehaviour
     private void ChangeState()
     {
         previousState = stateMachine.GetCurrentState();
-        if (search){
+        if (search)
+        {
             searchingState.InitializeSearchParameters(pointOfInterest, searchRadius);
             stateMachine.SetCurrentState(searchingState);
-        } else if (investigate) {
+        }
+        else if (investigate)
+        {
             investigateState.InitializeSearchParameters(pointOfInterest, searchRadius);
             stateMachine.SetCurrentState(investigateState);
-        } else if (patrol) {
+        }
+        else if (patrol)
+        {
             stateMachine.SetCurrentState(patrolState);
         }
         ResetStateBooleans();
@@ -138,12 +147,18 @@ public class DroneBehaviourController : MonoBehaviour
         ChangeState();
     }
 
-    public string GetStateName() {
-        if (stateMachine.GetCurrentState() == searchingState) {
+    public string GetStateName()
+    {
+        if (stateMachine.GetCurrentState() == searchingState)
+        {
             return "Searching";
-        } else if (stateMachine.GetCurrentState() == investigateState) {
+        }
+        else if (stateMachine.GetCurrentState() == investigateState)
+        {
             return "Investigating";
-        } else {
+        }
+        else
+        {
             return "Patrolling";
         }
     }

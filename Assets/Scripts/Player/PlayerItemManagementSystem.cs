@@ -7,7 +7,7 @@ public class PlayerItemManagementSystem : MonoBehaviour
     Transform handLocation;
     ItemSlot handSlot;
     PlayerInputActions inputActions;
-    
+
 
     private void Awake()
     {
@@ -19,8 +19,10 @@ public class PlayerItemManagementSystem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Bottle"){
-            if (!other.GetComponent<BottleController>().HasBeenThrow()) {
+        if (other.tag == "Bottle")
+        {
+            if (!other.GetComponent<BottleController>().HasBeenThrow())
+            {
                 PickupItem(other.gameObject);
             }
         }
@@ -28,7 +30,8 @@ public class PlayerItemManagementSystem : MonoBehaviour
 
     void onThrowingInitiated(InputAction.CallbackContext context)
     {
-        if (!GameManager.menuOpened) {
+        if (!GameManager.menuOpened)
+        {
             ThrowItem();
         }
     }

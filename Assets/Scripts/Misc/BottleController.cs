@@ -15,7 +15,8 @@ public class BottleController : MonoBehaviour
         rigibody = GetComponent<Rigidbody>();
     }
 
-    public void Throw() {
+    public void Throw()
+    {
         isThrown = true;
         transform.parent = null;
         rigibody.isKinematic = false;
@@ -25,11 +26,14 @@ public class BottleController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Environment" && isThrown) {
+        if (collider.gameObject.tag == "Environment" && isThrown)
+        {
             soundCollider.enabled = true;
             PlaySound();
             SimulateSound();
-        } else if (collider.tag == "Drone") {
+        }
+        else if (collider.tag == "Drone")
+        {
             expandingArea = false;
             NotifyClosestEnemy(collider);
             BreakBottle();
@@ -61,15 +65,18 @@ public class BottleController : MonoBehaviour
 
     private void Update()
     {
-        if (expandingArea) {
+        if (expandingArea)
+        {
             soundCollider.radius += expandingSpeed * Time.deltaTime;
-            if(soundCollider.radius >= maxExpansionArea){
+            if (soundCollider.radius >= maxExpansionArea)
+            {
                 BreakBottle();
             }
         }
     }
 
-    public bool HasBeenThrow() {
+    public bool HasBeenThrow()
+    {
         return isThrown;
     }
 }

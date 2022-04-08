@@ -29,14 +29,16 @@ public class GameManager : MonoBehaviour
         {
             menuOpened = true;
         }
-        else {
+        else
+        {
             if (menuOpened)
             {
-                if(!SceneManager.GetSceneByBuildIndex(uiSceneNumber).isLoaded) SceneManager.LoadSceneAsync(uiSceneNumber, LoadSceneMode.Additive);
+                if (!SceneManager.GetSceneByBuildIndex(uiSceneNumber).isLoaded) SceneManager.LoadSceneAsync(uiSceneNumber, LoadSceneMode.Additive);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Confined;
             }
-            else {
+            else
+            {
                 CloseUi();
             }
         }
@@ -44,7 +46,8 @@ public class GameManager : MonoBehaviour
 
     public void LoadTestScene()
     {
-        if (FindObjectOfType<DroneSuspicionManager>() != null) {
+        if (FindObjectOfType<DroneSuspicionManager>() != null)
+        {
             FindObjectOfType<DroneSuspicionManager>().ResetTimesSoundHeard();
         }
         SceneManager.LoadScene(testSceneNumber);
@@ -52,7 +55,8 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    public void CloseUi() {
+    public void CloseUi()
+    {
         menuOpened = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -64,18 +68,21 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    public PlayerInputActions GetInputActions() {
+    public PlayerInputActions GetInputActions()
+    {
         return inputActions;
     }
 
     void OnEnable()
     {
         inputActions.Player.Enable();
-        if (gameManager == null){
+        if (gameManager == null)
+        {
             gameManager = this;
             DontDestroyOnLoad(base.gameObject);
         }
-        else {
+        else
+        {
             Destroy(base.gameObject);
         }
     }
@@ -92,7 +99,8 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
     }
 
-    public String GetActiveSceneName() {
+    public String GetActiveSceneName()
+    {
         return SceneManager.GetActiveScene().name;
     }
 }

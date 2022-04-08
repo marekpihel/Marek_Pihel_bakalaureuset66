@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,7 +26,8 @@ public class DroneSuspicionManager : MonoBehaviour
         }
     }
 
-    public void ReloadDrones() {
+    public void ReloadDrones()
+    {
         drones.Clear();
         foreach (DroneBehaviourController droneController in FindObjectsOfType<DroneBehaviourController>())
         {
@@ -36,11 +36,13 @@ public class DroneSuspicionManager : MonoBehaviour
         }
     }
 
-    public void ResetTimesSoundHeard() {
+    public void ResetTimesSoundHeard()
+    {
         timesSoundHeard = 0;
     }
 
-    public void heardSound(Vector3 soundHeardPosition) {
+    public void heardSound(Vector3 soundHeardPosition)
+    {
         ReloadDrones();
         lastPosition = soundHeardPosition;
         AlertCloseDrones();
@@ -52,7 +54,8 @@ public class DroneSuspicionManager : MonoBehaviour
     {
         foreach (DroneBehaviourController droneController in drones)
         {
-            if (droneController.InAlertRange(lastPosition, soundReactionDistance)) {
+            if (droneController.InAlertRange(lastPosition, soundReactionDistance))
+            {
                 droneController.ReactToSound(lastPosition);
             }
         }
@@ -60,8 +63,10 @@ public class DroneSuspicionManager : MonoBehaviour
 
     private void checkForAlterState()
     {
-        if (timesSoundHeard >= changeStateSoundAmount) {
-            foreach (DroneBehaviourController droneController in drones) {
+        if (timesSoundHeard >= changeStateSoundAmount)
+        {
+            foreach (DroneBehaviourController droneController in drones)
+            {
                 droneController.ChangeToSearchingState(lastPosition);
             }
         }
@@ -69,11 +74,15 @@ public class DroneSuspicionManager : MonoBehaviour
 
     private void Update()
     {
-        if (timeUntilSoundHeardReduction >= 0) {
+        if (timeUntilSoundHeardReduction >= 0)
+        {
             timeUntilSoundHeardReduction -= Time.deltaTime;
-        } else {
+        }
+        else
+        {
             timeUntilSoundHeardReduction = soundHeardReductionCooldown;
-            if (timesSoundHeard > 0) {
+            if (timesSoundHeard > 0)
+            {
                 timesSoundHeard -= 1;
             }
         }

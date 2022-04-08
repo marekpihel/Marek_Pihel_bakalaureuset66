@@ -9,20 +9,22 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField]
     VirtualFootStepSound virtualFootStepSound;
 
+
     Vector2 currentMovementInput;
     Vector3 currentMovement;
 
     Vector2 currentLookInput;
 
     float movementSpeed = 5f, sprintModifier = 1.5f, sneakModifier = 0.5f;
-    
+
 
     bool isSprintPressed, isSneakPressed, checkForStandingUp;
 
     float upDownAngle = 0f;
     float mouseSensitivity = 0.1f;
 
-    void initInputSystem(PlayerInputActions.PlayerActions playerActions) {
+    void initInputSystem(PlayerInputActions.PlayerActions playerActions)
+    {
         #region Subscriptions
         #region Movement
         playerActions.Move.started += onMovementInput;
@@ -37,7 +39,6 @@ public class PlayerMovementController : MonoBehaviour
         #region Sneak
         playerActions.Sneak.started += onSneak;
         playerActions.Sneak.canceled += onSneak;
-        playerActions.Sneak.performed += onSneak;
         #endregion
         #region Look
         playerActions.Look.started += onLookInput;
@@ -58,8 +59,10 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     #region Input system callbacks
-    void onLookInput(InputAction.CallbackContext context) {
-        if (!GameManager.menuOpened) {
+    void onLookInput(InputAction.CallbackContext context)
+    {
+        if (!GameManager.menuOpened)
+        {
             currentLookInput = context.ReadValue<Vector2>();
             upDownAngle -= currentLookInput.y * mouseSensitivity;
             upDownAngle = Mathf.Clamp(upDownAngle, -85, 90);
@@ -73,7 +76,8 @@ public class PlayerMovementController : MonoBehaviour
         currentMovementInput = context.ReadValue<Vector2>();
     }
 
-    void onSprint(InputAction.CallbackContext context) {
+    void onSprint(InputAction.CallbackContext context)
+    {
         isSprintPressed = context.ReadValueAsButton();
     }
 
@@ -82,7 +86,7 @@ public class PlayerMovementController : MonoBehaviour
         isSneakPressed = context.ReadValueAsButton();
         if (isSneakPressed)
         {
-            changeStance(1, new Vector3(1, 0.5f, 1), new Vector3(transform.position.x, 1f, transform.position.z));
+            changeStance(1, new Vector3(1, 0.5f, 1), new Vector3(transform.position.x, 0.58f, transform.position.z));
         }
         else
         {
@@ -91,9 +95,9 @@ public class PlayerMovementController : MonoBehaviour
                 isSneakPressed = true;
                 checkForStandingUp = true;
             }
-            else {
-                changeStance(2, Vector3.one, new Vector3(transform.position.x, 0.5f, transform.position.z));
-
+            else
+            {
+                changeStance(2, Vector3.one, new Vector3(transform.position.x, 1.08f, transform.position.z));
             }
         }
     }
@@ -115,7 +119,8 @@ public class PlayerMovementController : MonoBehaviour
     #endregion
 
     #region Change stance
-    void changeStance(int height, Vector3 scale, Vector3 position) {
+    void changeStance(int height, Vector3 scale, Vector3 position)
+    {
         characterController.height = height;
         transform.localScale = scale;
         transform.position = position;
@@ -134,13 +139,14 @@ public class PlayerMovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.menuOpened) {
+        if (!GameManager.menuOpened)
+        {
             updateCurrentMovement();
             if (checkForStandingUp)
             {
                 if (checkIfAboveClear(transform.position))
                 {
-                    changeStance(2, Vector3.one, new Vector3(transform.position.x, 0.5f, transform.position.z));
+                    changeStance(2, Vector3.one, new Vector3(transform.position.x, 1.08f, transform.position.z));
                     checkForStandingUp = false;
                     isSneakPressed = false;
                 }
@@ -155,11 +161,15 @@ public class PlayerMovementController : MonoBehaviour
                 {
                     characterController.Move(currentMovement * sprintModifier);
                     ChangeFootstepRange(sprintModifier);
-                } else if (isSneakPressed) {
+                }
+                else if (isSneakPressed)
+                {
                     characterController.Move(currentMovement * sneakModifier);
                     ChangeFootstepRange(sneakModifier);
 
-                } else {
+                }
+                else
+                {
                     characterController.Move(currentMovement);
                     ChangeFootstepRange(1);
                 }
