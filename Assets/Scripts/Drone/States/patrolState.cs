@@ -8,7 +8,8 @@ public class PatrolState : State
 
     int currentPoint;
 
-    public PatrolState(string stateName) {
+    public PatrolState(string stateName)
+    {
         base.SetName(stateName);
     }
 
@@ -20,7 +21,7 @@ public class PatrolState : State
 
     public override void PerformAction()
     {
-        
+
         if (!GetNavMeshAgent().hasPath)
         {
             currentPoint = (currentPoint + 1) % patrolPath.Count;
@@ -29,7 +30,8 @@ public class PatrolState : State
     }
 
     #region Setters
-    public void SetPatrolPath(List<GameObject> patrolPath){
+    public void SetPatrolPath(List<GameObject> patrolPath)
+    {
         this.patrolPath = patrolPath;
     }
     #endregion

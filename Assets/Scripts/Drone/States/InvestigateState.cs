@@ -6,7 +6,8 @@ public class InvestigateState : State
     int searchRadius = 1, maxSearchAmount = 3, searchedTimes = 3;
     float investigationCooldown = 3, investigatedTime = 0, turningSpeed = 50;
 
-    public InvestigateState(string stateName) {
+    public InvestigateState(string stateName)
+    {
         base.SetName(stateName);
     }
 
@@ -28,10 +29,12 @@ public class InvestigateState : State
     private void LookAround()
     {
         Transform droneTransform = GetNavMeshAgent().gameObject.transform;
-        if (investigatedTime > investigationCooldown*2/3){
+        if (investigatedTime > investigationCooldown * 2 / 3)
+        {
             droneTransform.Rotate(Vector3.up, turningSpeed * Time.deltaTime);
         }
-        else {
+        else
+        {
             droneTransform.Rotate(Vector3.down, turningSpeed * Time.deltaTime);
         }
     }
@@ -45,7 +48,9 @@ public class InvestigateState : State
             investigatedTime = investigationCooldown;
             searchedTimes -= 1;
             return true;
-        } else if (searchedTimes == 0) {
+        }
+        else if (searchedTimes == 0)
+        {
             investigatedTime = 0;
             SetIsFinished(true);
             return false;
@@ -60,9 +65,7 @@ public class InvestigateState : State
     #region  Setters
     public void SetPointOfInterest(Vector3 newPointOfInterest)
     {
-        this.pointOfIntetest = newPointOfInterest;
-
-
+        pointOfIntetest = newPointOfInterest;
     }
 
     public void SetSearchRadius(int searchRadius)
@@ -72,7 +75,8 @@ public class InvestigateState : State
     #endregion
 
     #region Initialize search parameters
-    public void InitializeSearchParameters(Vector3 pointOfInterest, int searchRadius) {
+    public void InitializeSearchParameters(Vector3 pointOfInterest, int searchRadius)
+    {
         GetNavMeshAgent().ResetPath();
         searchedTimes = maxSearchAmount;
         investigatedTime = 0;
@@ -90,7 +94,7 @@ public class InvestigateState : State
 
     private float GetRandomCoordInsideSearchRadius(int searchRadius)
     {
-        return UnityEngine.Random.Range(-1 * searchRadius, searchRadius);
+        return Random.Range(-1 * searchRadius, searchRadius);
     }
     #endregion
 }

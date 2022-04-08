@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class SearchingState : State
@@ -66,18 +65,21 @@ public class SearchingState : State
             investigatedTime = investigationCooldown;
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
     }
     #endregion
 
     #region Setters
-    public void SetPointOfInterest(Vector3 newPointOfInterest) {
+    public void SetPointOfInterest(Vector3 newPointOfInterest)
+    {
         this.pointOfIntetest = newPointOfInterest;
     }
 
-    public void SetSearchRadius(int searchRadius) {
+    public void SetSearchRadius(int searchRadius)
+    {
         this.searchRadius = searchRadius;
     }
     #endregion
@@ -90,7 +92,7 @@ public class SearchingState : State
 
     private float GetRandomCoordInsideSearchRadius(int searchRadius)
     {
-        return UnityEngine.Random.Range(-1*searchRadius, searchRadius);
+        return UnityEngine.Random.Range(-1 * searchRadius, searchRadius);
     }
     #endregion
 }
