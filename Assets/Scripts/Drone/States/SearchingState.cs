@@ -21,7 +21,9 @@ public class SearchingState : State
                 Vector3 nextDest = GetRandomPointInsideSearchArea();
                 GoToLocation(nextDest);
             }
-            LookAround();
+            if (investigatedTime >= 0) { 
+                LookAround();
+            }
             investigatedTime -= Time.deltaTime;
         }
     }
@@ -38,7 +40,7 @@ public class SearchingState : State
     #region Expand search area
     private void ExpandSearchArea()
     {
-        searchRadius += 1;
+        searchRadius += 2;
     }
     #endregion
 

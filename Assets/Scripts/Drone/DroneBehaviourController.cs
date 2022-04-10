@@ -21,8 +21,6 @@ public class DroneBehaviourController : MonoBehaviour
 
     DroneSuspicionManager droneSuspicionManager;
 
-    int searchRadius = 5;
-
     #region Initialize states and navmeshes
     private void InitializeStates()
     {
@@ -62,8 +60,14 @@ public class DroneBehaviourController : MonoBehaviour
         if (!GameManager.menuOpened)
         {
             stateMachine.GetCurrentState().GetNavMeshAgent().isStopped = false;
-            if (!HasStateChanged(stateMachine.GetCurrentState())) { ChangeState(); }
-            if (stateMachine.GetCurrentState().GetIsFinished()) { patrol = true; }
+            if (!HasStateChanged(stateMachine.GetCurrentState())) 
+            {
+                ChangeState();
+            }
+            if (stateMachine.GetCurrentState().GetIsFinished())
+            {
+                patrol = true;
+            }
             stateMachine.GetCurrentState().PerformAction();
         }
         else
@@ -86,12 +90,12 @@ public class DroneBehaviourController : MonoBehaviour
         previousState = stateMachine.GetCurrentState();
         if (search)
         {
-            searchingState.InitializeSearchParameters(pointOfInterest, searchRadius);
+            searchingState.InitializeSearchParameters(pointOfInterest, droneSuspicionManager.GetSearchReadius());
             stateMachine.SetCurrentState(searchingState);
         }
         else if (investigate)
         {
-            investigateState.InitializeSearchParameters(pointOfInterest, searchRadius);
+            investigateState.InitializeSearchParameters(pointOfInterest, droneSuspicionManager.GetSearchReadius());
             stateMachine.SetCurrentState(investigateState);
         }
         else if (patrol)
@@ -110,7 +114,7 @@ public class DroneBehaviourController : MonoBehaviour
     internal void InvestigatePoint(Vector3 position)
     {
         SetupPointOfIntrestAndTransitionToDiffState(position);
-        droneSuspicionManager.heardSound(position);
+        droneSuspicionManager.HeardSound(position, this);
         ChangeState();
     }
 

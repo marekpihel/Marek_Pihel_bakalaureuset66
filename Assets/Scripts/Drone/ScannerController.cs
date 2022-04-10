@@ -6,6 +6,16 @@ public class ScannerController : MonoBehaviour
     Transform scanOrigin;
     private void OnTriggerStay(Collider other)
     {
+        CheckForPlayer(other);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        CheckForPlayer(other);
+    }
+
+    private void CheckForPlayer(Collider other)
+    {
         if (other.tag == "Player")
         {
             RaycastHit hit;
