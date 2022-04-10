@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     {
         if (FindObjectOfType<DroneSuspicionManager>() != null)
         {
-            FindObjectOfType<DroneSuspicionManager>().ResetTimesSoundHeard();
+            FindObjectOfType<DroneSuspicionManager>().ResetDroneSuspicionParams();
         }
         SceneManager.LoadScene(testSceneNumber);
         Cursor.visible = false;

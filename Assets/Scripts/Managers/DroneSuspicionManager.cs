@@ -5,18 +5,13 @@ public class DroneSuspicionManager : MonoBehaviour
 {
     public static DroneSuspicionManager suspicionManager;
     List<DroneBehaviourController> allDrones;
-    List<DroneBehaviourController> dronesReactingToSound;
     Vector3 lastPosition;
-    int changeStateSoundAmount = 5;
-    int timesSoundHeard = 0;
-    float soundReactionDistance = 10f;
-    float soundHeardReductionCooldown = 15f;
-    float timeUntilSoundHeardReduction = 0f;
+    int changeStateSoundAmount = 5, shortTimeSoundHeard = 0, searchRadius = 5, totalTimesSoundHeard = 0;
+    float soundReactionDistance = 10f, soundHeardReductionCooldown = 60f, timeUntilSoundHeardReduction = 0f;
 
     void OnEnable()
     {
         allDrones = new List<DroneBehaviourController>();
-        dronesReactingToSound = new List<DroneBehaviourController>();
         if (suspicionManager == null)
         {
             suspicionManager = this;
@@ -38,36 +33,60 @@ public class DroneSuspicionManager : MonoBehaviour
         }
     }
 
-    public void ResetTimesSoundHeard()
+    public void ResetDroneSuspicionParams()
     {
-        timesSoundHeard = 0;
+        shortTimeSoundHeard = 0;
+        totalTimesSoundHeard = 0;
+        searchRadius = 5;
     }
 
-    public void heardSound(Vector3 soundHeardPosition, DroneBehaviourController droneController)
+    public void HeardSound(Vector3 soundHeardPosition, DroneBehaviourController droneController)
     {
         ReloadDrones();
         lastPosition = soundHeardPosition;
-        AddDroneReactingToSound(droneController);
+        shortTimeSoundHeard += 1;
+        totalTimesSoundHeard += 1;
+        ExpandSearchRadius();
         AlertCloseDrones();
-        timesSoundHeard += 1;
         checkForAlterState();
+    }
+
+    public void ExpandSearchRadius()
+    {
+        if (ShouldExpandSearchRadius())
+        {
+            searchRadius += 1;
+            print("Increasing range");
+            print("New range: " + searchRadius);
+        }
+    }
+
+    private bool ShouldExpandSearchRadius()
+    {
+        if (totalTimesSoundHeard % 3 == 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     private void AlertCloseDrones()
     {
+        int count = 0;
         foreach (DroneBehaviourController droneController in allDrones)
         {
-            if (droneController.InAlertRange(lastPosition, soundReactionDistance) && ShouldReactToSound())
+            if (droneController.InAlertRange(lastPosition, soundReactionDistance))
             {
                 droneController.ReactToSound(lastPosition);
-                AddDroneReactingToSound(droneController);
+                count += 1;
             }
         }
+        print("Drones reacting: " + count);
     }
 
     private void checkForAlterState()
     {
-        if (timesSoundHeard >= changeStateSoundAmount)
+        if (shortTimeSoundHeard >= changeStateSoundAmount)
         {
             foreach (DroneBehaviourController droneController in allDrones)
             {
@@ -85,26 +104,21 @@ public class DroneSuspicionManager : MonoBehaviour
         else
         {
             timeUntilSoundHeardReduction = soundHeardReductionCooldown;
-            if (timesSoundHeard > 0)
+            if (shortTimeSoundHeard > 0)
             {
-                timesSoundHeard -= 1;
+                shortTimeSoundHeard -= 1;
             }
         }
     }
 
-    public float GetRangeFromSoundToReact() { return soundReactionDistance; }
-
-    public void AddDroneReactingToSound(DroneBehaviourController droneController) {
-        dronesReactingToSound.Add(droneController);
+    public float GetRangeFromSoundToReact()
+    {
+        return soundReactionDistance;
     }
 
-    public bool ShouldReactToSound() {
-        return dronesReactingToSound.Count < timesSoundHeard;
+    public int GetSearchReadius()
+    {
+        return searchRadius;
     }
-
-    public void RemoveDroneFromReacting(DroneBehaviourController droneController) {
-        dronesReactingToSound.Remove(droneController);
-    }
-
 
 }

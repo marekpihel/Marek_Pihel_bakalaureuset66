@@ -40,7 +40,7 @@ public class SearchingState : State
     #region Expand search area
     private void ExpandSearchArea()
     {
-        searchRadius += 1;
+        searchRadius += 2;
     }
     #endregion
 
