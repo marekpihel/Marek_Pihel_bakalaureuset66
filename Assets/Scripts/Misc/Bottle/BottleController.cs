@@ -4,6 +4,8 @@ public class BottleController : MonoBehaviour
 {
     [SerializeField]
     SphereCollider soundCollider;
+    [SerializeField]
+    GameObject bottleBreakingSound;
 
     Rigidbody rigibody;
     bool isThrown = false, expandingArea = false;
@@ -20,7 +22,7 @@ public class BottleController : MonoBehaviour
         isThrown = true;
         transform.parent = null;
         rigibody.isKinematic = false;
-        rigibody.AddRelativeForce(Vector3.back * 500 + Vector3.down * 250);
+        rigibody.AddRelativeForce(Vector3.back * 10000 + Vector3.down * 5000);
     }
 
 
@@ -29,7 +31,7 @@ public class BottleController : MonoBehaviour
         if (collider.gameObject.tag == "Environment" && isThrown)
         {
             soundCollider.enabled = true;
-            PlaySound();
+            PlaySound(transform);
             SimulateSound();
         }
         else if (collider.tag == "Drone")
@@ -46,10 +48,9 @@ public class BottleController : MonoBehaviour
         expandingArea = true;
     }
 
-    private void PlaySound()
+    private void PlaySound(Transform location)
     {
-        //ToDo: Implement sound emitter
-        print("Playing sound");
+        Instantiate(bottleBreakingSound, location.position, location.rotation);
     }
 
     private void NotifyClosestEnemy(Collider droneCollider)

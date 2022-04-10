@@ -613,6 +613,9 @@ PrefabInstance:
     - {fileID: 544452034797485032, guid: 45e2992e75570224696e26134a9b378e, type: 3}
     - {fileID: 205702613, guid: 45e2992e75570224696e26134a9b378e, type: 3}
     - {fileID: 680629560, guid: 45e2992e75570224696e26134a9b378e, type: 3}
+    - {fileID: 611579336, guid: 45e2992e75570224696e26134a9b378e, type: 3}
+    - {fileID: 8405268975600825791, guid: 45e2992e75570224696e26134a9b378e, type: 3}
+    - {fileID: 7702698903586426938, guid: 45e2992e75570224696e26134a9b378e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 45e2992e75570224696e26134a9b378e, type: 3}
 --- !u!1 &1015522728
 GameObject:
@@ -1422,9 +1425,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: KillerDrone (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5751894358857318037, guid: 45e2992e75570224696e26134a9b378e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7702698903586426938, guid: 45e2992e75570224696e26134a9b378e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405268975600825791, guid: 45e2992e75570224696e26134a9b378e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5732422035270465901, guid: 45e2992e75570224696e26134a9b378e, type: 3}
     - {fileID: 544452034797485032, guid: 45e2992e75570224696e26134a9b378e, type: 3}
     - {fileID: 205702613, guid: 45e2992e75570224696e26134a9b378e, type: 3}
     - {fileID: 680629560, guid: 45e2992e75570224696e26134a9b378e, type: 3}
+    - {fileID: 611579336, guid: 45e2992e75570224696e26134a9b378e, type: 3}
+    - {fileID: 8405268975600825791, guid: 45e2992e75570224696e26134a9b378e, type: 3}
+    - {fileID: 7702698903586426938, guid: 45e2992e75570224696e26134a9b378e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 45e2992e75570224696e26134a9b378e, type: 3}

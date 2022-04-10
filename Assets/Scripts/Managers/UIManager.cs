@@ -129,6 +129,7 @@ public class UIManager : MonoBehaviour
     public void ChangeVolume(Slider volumeSlider)
     {
         PlayerPrefs.SetFloat("Volume", volumeSlider.value);
+        AudioListener.volume = volumeSlider.value;
     }
 
     public void CloseUI()
