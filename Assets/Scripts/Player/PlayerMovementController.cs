@@ -3,11 +3,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovementController : MonoBehaviour
 {
+    [SerializeField]
+    VirtualFootStepSound virtualFootStepSound;
+    
     PlayerInputActions playerInput;
     CharacterController characterController;
     Camera playerView;
-    [SerializeField]
-    VirtualFootStepSound virtualFootStepSound;
+    AudioSource playerFootstep;
 
 
     Vector2 currentMovementInput;
@@ -15,7 +17,7 @@ public class PlayerMovementController : MonoBehaviour
 
     Vector2 currentLookInput;
 
-    float movementSpeed = 5f, sprintModifier = 1.5f, sneakModifier = 0.5f;
+    float movementSpeed = 5f, stepTimer = 0, stepCooldown = 0.4f, sprintModifier = 1.5f, sneakModifier = 0.5f;
 
 
     bool isSprintPressed, isSneakPressed, checkForStandingUp;
@@ -54,6 +56,7 @@ public class PlayerMovementController : MonoBehaviour
         playerInput = new PlayerInputActions();
         characterController = GetComponent<CharacterController>();
         playerView = GetComponentInChildren<Camera>();
+        playerFootstep = GetComponent<AudioSource>();
 
         initInputSystem(playerInput.Player);
     }
@@ -161,18 +164,34 @@ public class PlayerMovementController : MonoBehaviour
                 {
                     characterController.Move(currentMovement * sprintModifier);
                     ChangeFootstepRange(sprintModifier);
+                    playerFootstep.volume = 0.4f;
+                    stepCooldown = 0.3f;
                 }
                 else if (isSneakPressed)
                 {
                     characterController.Move(currentMovement * sneakModifier);
                     ChangeFootstepRange(sneakModifier);
+                    playerFootstep.volume = 0.1f;
+                    stepCooldown = 0.5f;
 
                 }
                 else
                 {
                     characterController.Move(currentMovement);
                     ChangeFootstepRange(1);
+                    playerFootstep.volume = 0.25f;
+                    stepCooldown = 0.35f;
                 }
+                if (stepTimer <= 0)
+                {
+                    playerFootstep.Play();
+                    stepTimer = stepCooldown;
+                }
+                else {
+                    stepTimer -= Time.deltaTime;
+                }
+
+                
             }
         }
     }

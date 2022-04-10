@@ -121,6 +121,7 @@ public class DroneBehaviourController : MonoBehaviour
     private void SetupPointOfIntrestAndTransitionToDiffState(Vector3 position)
     {
         pointOfInterest = position;
+        transform.LookAt(Vector3.Lerp(pointOfInterest, transform.position, 0.1f));
         if (GetStateName() == "Searching")
         {
             stateMachine.SetCurrentState(searchingState);
