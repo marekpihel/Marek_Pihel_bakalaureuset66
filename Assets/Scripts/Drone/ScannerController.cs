@@ -24,6 +24,11 @@ public class ScannerController : MonoBehaviour
             {
                 FindObjectOfType<GameManager>().LoadMainMenu();
             }
+            else
+            {
+                print(hit.collider.name);
+            } 
         }
+        
     }
 }
