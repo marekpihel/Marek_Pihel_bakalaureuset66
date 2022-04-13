@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     PlayerInputActions inputActions;
-    const int mainMenuSceneNumber = 0, uiSceneNumber = 1, testSceneNumber = 2;
+
+    const int mainMenuSceneNumber = 0, uiSceneNumber = 1, testSceneNumber = 2, playGameSceneNumber = 3;
 
     public static bool menuOpened = false;
     public static GameManager gameManager;
@@ -44,13 +45,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void LoadTestScene()
+    public void LoadPlayScene()
     {
         if (FindObjectOfType<DroneSuspicionManager>() != null)
         {
             FindObjectOfType<DroneSuspicionManager>().ResetDroneSuspicionParams();
         }
-        SceneManager.LoadScene(testSceneNumber);
+        SceneManager.LoadScene(playGameSceneNumber);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
