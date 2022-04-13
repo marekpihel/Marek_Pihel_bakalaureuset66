@@ -56,8 +56,6 @@ public class DroneSuspicionManager : MonoBehaviour
         if (ShouldExpandSearchRadius())
         {
             searchRadius += 1;
-            print("Increasing range");
-            print("New range: " + searchRadius);
         }
     }
 
@@ -81,7 +79,6 @@ public class DroneSuspicionManager : MonoBehaviour
                 count += 1;
             }
         }
-        print("Drones reacting: " + count);
     }
 
     private void checkForAlterState()

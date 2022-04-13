@@ -20,7 +20,7 @@ public class PlayerMovementController : MonoBehaviour
     float movementSpeed = 5f, stepTimer = 0, stepCooldown = 0.4f, sprintModifier = 1.5f, sneakModifier = 0.5f;
 
 
-    bool isSprintPressed, isSneakPressed, checkForStandingUp;
+    bool isSprintPressed, isSneakPressed, checkForStandingUp, footstepsDisabled;
 
     float upDownAngle = 0f;
     float mouseSensitivity = 0.1f;
@@ -198,7 +198,13 @@ public class PlayerMovementController : MonoBehaviour
 
     private void ChangeFootstepRange(float modifier)
     {
-        virtualFootStepSound.ChangeFootstepHeardRange(modifier);
+        if (!footstepsDisabled)
+        {
+            virtualFootStepSound.ChangeFootstepHeardRange(modifier);
+        }
+        else {
+            virtualFootStepSound.ChangeFootstepHeardRange(0);
+        }
     }
 
     void OnEnable()
@@ -210,4 +216,30 @@ public class PlayerMovementController : MonoBehaviour
     {
         playerInput.Player.Disable();
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Cell") {
+            print("In cell");
+            footstepsDisabled = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.tag == "Cell")
+        {
+            print("In cell");
+            footstepsDisabled = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.tag == "Cell")
+        {
+            print("In cell");
+            footstepsDisabled = false;
+        }
+    }
+
 }
