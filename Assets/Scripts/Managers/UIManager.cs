@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour
     public void LoadTestScene()
     {
         lastUiView = "pause";
-        gameManager.LoadTestScene();
+        gameManager.LoadPlayScene();
     }
 
     public void ExitGame()
