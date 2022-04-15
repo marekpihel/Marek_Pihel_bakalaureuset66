@@ -5,7 +5,7 @@ public class VirtualFootStepSound : MonoBehaviour
 {
     BoxCollider footstepRange;
     int height = 3;
-    Vector3 walkingFootstepRange = new Vector3(10, 0, 10);
+    Vector3 walkingFootstepRange = new Vector3(9, 0, 9);
 
     private void Awake()
     {
