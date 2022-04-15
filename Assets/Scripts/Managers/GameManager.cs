@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     const int mainMenuSceneNumber = 0, uiSceneNumber = 1, testSceneNumber = 2, playGameSceneNumber = 3;
 
     public static bool menuOpened = false;
+
     public static GameManager gameManager;
 
 
@@ -103,5 +105,10 @@ public class GameManager : MonoBehaviour
     public String GetActiveSceneName()
     {
         return SceneManager.GetActiveScene().name;
+    }
+
+    internal void SetMenuStatus(bool menuStatus)
+    {
+        menuOpened = menuStatus;
     }
 }
