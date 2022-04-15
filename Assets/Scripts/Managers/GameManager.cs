@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     const int mainMenuSceneNumber = 0, uiSceneNumber = 1, testSceneNumber = 2, playGameSceneNumber = 3;
 
-    public static bool menuOpened = false;
+    public static bool menuOpened = false, winLossState = false;
 
     public static GameManager gameManager;
 
@@ -27,22 +27,25 @@ public class GameManager : MonoBehaviour
 
     void onCancel(InputAction.CallbackContext context)
     {
-        menuOpened = !menuOpened;
-        if (SceneManager.GetSceneByBuildIndex(mainMenuSceneNumber).isLoaded)
+        if (!winLossState)
         {
-            menuOpened = true;
-        }
-        else
-        {
-            if (menuOpened)
+            menuOpened = !menuOpened;
+            if (SceneManager.GetSceneByBuildIndex(mainMenuSceneNumber).isLoaded)
             {
-                if (!SceneManager.GetSceneByBuildIndex(uiSceneNumber).isLoaded) SceneManager.LoadSceneAsync(uiSceneNumber, LoadSceneMode.Additive);
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.Confined;
+                menuOpened = true;
             }
             else
             {
-                CloseUi();
+                if (menuOpened)
+                {
+                    if (!SceneManager.GetSceneByBuildIndex(uiSceneNumber).isLoaded) SceneManager.LoadSceneAsync(uiSceneNumber, LoadSceneMode.Additive);
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.Confined;
+                }
+                else
+                {
+                    CloseUi();
+                }
             }
         }
     }
@@ -53,6 +56,7 @@ public class GameManager : MonoBehaviour
         {
             FindObjectOfType<DroneSuspicionManager>().ResetDroneSuspicionParams();
         }
+        menuOpened = false;
         SceneManager.LoadScene(playGameSceneNumber);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -110,5 +114,9 @@ public class GameManager : MonoBehaviour
     internal void SetMenuStatus(bool menuStatus)
     {
         menuOpened = menuStatus;
+    }
+
+    public void SetWinLossState(bool state) {
+        winLossState = state;
     }
 }

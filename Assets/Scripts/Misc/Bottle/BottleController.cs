@@ -8,9 +8,9 @@ public class BottleController : MonoBehaviour
     GameObject bottleBreakingSound;
 
     Rigidbody rigibody;
-    bool isThrown = false, expandingArea = false;
+    bool isThrown = false, expandingArea = false, hasCollided = false;
     private float expandingSpeed = 100f;
-    private float maxExpansionArea = 20f;
+    private float maxExpansionArea = 30f;
 
     private void Awake()
     {
@@ -28,8 +28,9 @@ public class BottleController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Environment" && isThrown)
+        if (collider.gameObject.tag == "Environment" && isThrown && !hasCollided)
         {
+            hasCollided = true;
             soundCollider.enabled = true;
             PlaySound(transform);
             SimulateSound();
@@ -39,7 +40,6 @@ public class BottleController : MonoBehaviour
             expandingArea = false;
             NotifyClosestEnemy(collider);
             BreakBottle();
-
         }
     }
 
@@ -61,7 +61,7 @@ public class BottleController : MonoBehaviour
 
     private void BreakBottle()
     {
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 
     private void Update()

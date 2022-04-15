@@ -9,7 +9,7 @@ public class DroneBehaviourController : MonoBehaviour
     [SerializeField]
     List<GameObject> patrolPath;
 
-    bool search, investigate, patrol, stateChanged;
+    bool search = false, investigate = false, patrol = false, stateChanged = false;
     Vector3 pointOfInterest;
 
     StateMachine stateMachine;
@@ -120,18 +120,10 @@ public class DroneBehaviourController : MonoBehaviour
 
     private void SetupPointOfIntrestAndTransitionToDiffState(Vector3 position)
     {
-        pointOfInterest = position;
-        transform.LookAt(Vector3.Lerp(pointOfInterest, transform.position, 0.1f));
-        if (GetStateName() == "Searching")
-        {
-            stateMachine.SetCurrentState(searchingState);
-            search = true;
-        }
-        else
-        {
+            pointOfInterest = position;
+            transform.LookAt(Vector3.Lerp(pointOfInterest, transform.position, 0.1f));
             stateMachine.SetCurrentState(investigateState);
             investigate = true;
-        }
     }
 
     internal bool InAlertRange(Vector3 lastPosition, float soundReactionDistance)

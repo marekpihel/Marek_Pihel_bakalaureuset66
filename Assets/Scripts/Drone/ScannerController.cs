@@ -9,11 +9,13 @@ public class ScannerController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        //print("Collider: " + other.name);
         CheckForPlayer(other);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        //print("Collider: " + other.name);
         CheckForPlayer(other);
     }
 
@@ -21,12 +23,13 @@ public class ScannerController : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            //print("Collider: " + other.name);
             RaycastHit hit;
             Physics.Linecast(scanOrigin.position, other.transform.position, out hit);
             if (hit.collider.name == "Player" && !loadingMainMenu)
             {
                 loadingMainMenu = true;
-                FindObjectOfType<GameManager>().LoadMainMenu();
+                GameObject.FindGameObjectWithTag("WinLossUI").GetComponent<WinLossScreenManager>().ActivateLossScreen();
             }
         }
         

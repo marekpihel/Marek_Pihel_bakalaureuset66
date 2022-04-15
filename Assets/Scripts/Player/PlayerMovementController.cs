@@ -87,20 +87,23 @@ public class PlayerMovementController : MonoBehaviour
     void onSneak(InputAction.CallbackContext context)
     {
         isSneakPressed = context.ReadValueAsButton();
-        if (isSneakPressed)
+        if (!GameManager.menuOpened)
         {
-            changeStance(1, new Vector3(1, 0.5f, 1), new Vector3(transform.position.x, 0.58f, transform.position.z));
-        }
-        else
-        {
-            if (!checkIfAboveClear(transform.position))
+            if (isSneakPressed)
             {
-                isSneakPressed = true;
-                checkForStandingUp = true;
+                changeStance(1, new Vector3(1, 0.5f, 1), new Vector3(transform.position.x, 0.58f, transform.position.z));
             }
             else
             {
-                changeStance(2, Vector3.one, new Vector3(transform.position.x, 1.08f, transform.position.z));
+                if (!checkIfAboveClear(transform.position))
+                {
+                    isSneakPressed = true;
+                    checkForStandingUp = true;
+                }
+                else
+                {
+                    changeStance(2, Vector3.one, new Vector3(transform.position.x, 1.08f, transform.position.z));
+                }
             }
         }
     }
@@ -220,7 +223,6 @@ public class PlayerMovementController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Cell") {
-            print("In cell");
             footstepsDisabled = true;
         }
     }
@@ -229,7 +231,6 @@ public class PlayerMovementController : MonoBehaviour
     {
         if(other.tag == "Cell")
         {
-            print("In cell");
             footstepsDisabled = true;
         }
     }
@@ -237,7 +238,6 @@ public class PlayerMovementController : MonoBehaviour
     {
         if(other.tag == "Cell")
         {
-            print("In cell");
             footstepsDisabled = false;
         }
     }
