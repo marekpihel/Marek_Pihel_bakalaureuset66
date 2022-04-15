@@ -11,21 +11,20 @@ public class UIManager : MonoBehaviour
     List<String> viewNames;
     [SerializeField]
     List<GameObject> viewGameObjects;
+    [SerializeField]
+    Dropdown resolutionDropdown;
+    [SerializeField]
+    Slider volumeSlider;
 
     String lastUiView;
     Dictionary<String, GameObject> views = new Dictionary<string, GameObject>();
 
-
-    Dropdown resolutionDropdown;
-    Slider volumeSlider;
 
 
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         LoadLastUIView();
-        resolutionDropdown = FindObjectOfType<Dropdown>();
-        volumeSlider = FindObjectOfType<Slider>();
         LoadViews();
         DeactivateAllUIViews();
         views[lastUiView].SetActive(true);
@@ -119,6 +118,8 @@ public class UIManager : MonoBehaviour
         volumeSlider.value = PlayerPrefs.GetFloat("Volume");
     }
 
+   
+
     public void ChangeResolution(Text resolution)
     {
         int width = int.Parse(resolution.text.Split(Char.Parse(" "))[0]);
@@ -143,5 +144,10 @@ public class UIManager : MonoBehaviour
     {
         CloseUI();
         gameManager.LoadMainMenu();
+    }
+    internal void LoadWinScreen()
+    {
+        DeactivateAllUIViews();
+        views["winScreen"].SetActive(true);
     }
 }
