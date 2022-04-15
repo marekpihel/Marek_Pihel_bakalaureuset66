@@ -19,16 +19,11 @@ public class ScannerController : MonoBehaviour
         if (other.tag == "Player")
         {
             RaycastHit hit;
-            print("Beam me up scotty");
             Physics.Linecast(scanOrigin.position, other.transform.position, out hit);
             if (hit.collider.name == "Player")
             {
                 FindObjectOfType<GameManager>().LoadMainMenu();
             }
-            else
-            {
-                print(hit.collider.name);
-            } 
         }
         
     }

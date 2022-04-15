@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 public class VirtualFootStepSound : MonoBehaviour
 {
     BoxCollider footstepRange;
     int height = 3;
-    Vector3 walkingFootstepRange = new Vector3(15, 0, 15);
+    Vector3 walkingFootstepRange = new Vector3(9, 0, 9);
 
     private void Awake()
     {
@@ -24,4 +25,15 @@ public class VirtualFootStepSound : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Cell") {
+            DisableFootsteps();
+        }
+    }
+
+    private void DisableFootsteps()
+    {
+        footstepRange.size = Vector3.zero;
+    }
 }

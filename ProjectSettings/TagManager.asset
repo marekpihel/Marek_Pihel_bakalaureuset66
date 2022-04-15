@@ -8,6 +8,7 @@ TagManager:
   - Bottle
   - Environment
   - Drone
+  - Cell
   layers:
   - Default
   - TransparentFX
