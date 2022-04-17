@@ -13289,7 +13289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7235033145697230998, guid: b8acd8d00d8e9db4aa135e964d2dc584, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.9
+      value: 9.46
       objectReference: {fileID: 0}
     - target: {fileID: 7235033145697230998, guid: b8acd8d00d8e9db4aa135e964d2dc584, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15442,7 +15442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5189254277872042636, guid: 45e2992e75570224696e26134a9b378e, type: 3}
       propertyPath: m_Name
-      value: KillerDrone
+      value: KillerDroneBugged
       objectReference: {fileID: 0}
     - target: {fileID: 5732422035270465901, guid: 45e2992e75570224696e26134a9b378e, type: 3}
       propertyPath: patrolPath.Array.data[0]
@@ -16560,7 +16560,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 827078115}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &1801822134
 GameObject:
   m_ObjectHideFlags: 0

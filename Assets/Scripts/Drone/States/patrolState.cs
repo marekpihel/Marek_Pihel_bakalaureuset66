@@ -29,7 +29,7 @@ public class PatrolState : State
             GoToLocation(GetLocation(patrolPath[currentPoint]));
         }
         if (patrolPath.Count == 1) {
-            if (Vector3.Distance(GetNavMeshAgent().transform.position, patrolPath[0].transform.position) < 0.8) {
+            if (Vector3.Distance(GetNavMeshAgent().transform.position, patrolPath[0].transform.position) < 1) {
                 GetNavMeshAgent().transform.rotation = patrolPath[0].transform.rotation;
             }
         }

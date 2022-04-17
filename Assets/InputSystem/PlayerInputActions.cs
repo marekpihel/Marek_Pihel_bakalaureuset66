@@ -327,6 +327,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""1cde4750-96ce-4139-afc9-e96c83270028"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Sneak"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""c84c4d9c-3bb0-4d24-a417-87313f251364"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
