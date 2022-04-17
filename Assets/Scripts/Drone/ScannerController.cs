@@ -9,13 +9,11 @@ public class ScannerController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        //print("Collider: " + other.name);
         CheckForPlayer(other);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //print("Collider: " + other.name);
         CheckForPlayer(other);
     }
 

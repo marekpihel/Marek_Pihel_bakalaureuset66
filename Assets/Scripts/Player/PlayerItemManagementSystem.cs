@@ -40,7 +40,6 @@ public class PlayerItemManagementSystem : MonoBehaviour
     {
         handSlot.SetItemInHand(gameObject);
         handSlot.GetItemInHand().GetComponent<BoxCollider>().size = new Vector3(0.23f, 1, 0.23f);
-        //handSlot.GetItemInHand().GetComponent<BoxCollider>().isTrigger = false;
         handSlot.GetItemInHand().GetComponent<Rigidbody>().isKinematic = true;
         SetItemLocation(handLocation);
     }
