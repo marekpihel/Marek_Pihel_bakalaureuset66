@@ -5596,7 +5596,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635573778}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 23.99, y: 5.67, z: -1.16}
+  m_LocalPosition: {x: 23.99, y: 5.67, z: -2.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 50939431}
@@ -5613,7 +5613,7 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 3
   m_Range: 10
   m_SpotAngle: 111
@@ -8016,7 +8016,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 853386451}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 24.23, y: 5.67, z: 3.03}
+  m_LocalPosition: {x: 23.445, y: 5.67, z: 2.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 50939431}
@@ -8033,7 +8033,7 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 3
   m_Range: 10
   m_SpotAngle: 114
@@ -9312,7 +9312,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.0990566, g: 0.14866826, b: 1, a: 1}
   m_Intensity: 999
-  m_Range: 0.2
+  m_Range: 0.25111973
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -9812,7 +9812,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1126255792
 Transform:
   m_ObjectHideFlags: 0
@@ -10745,7 +10745,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192120730}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 15.71, y: 5.67, z: 1.99}
+  m_LocalPosition: {x: 15.71, y: 5.67, z: 2.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 50939431}
@@ -10762,11 +10762,11 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 4
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Intensity: 3
   m_Range: 10
-  m_SpotAngle: 80
-  m_InnerSpotAngle: 8
+  m_SpotAngle: 110
+  m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -15450,7 +15450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5189254277872042636, guid: 45e2992e75570224696e26134a9b378e, type: 3}
       propertyPath: m_Name
-      value: KillerDroneBugged
+      value: KillerDrone
       objectReference: {fileID: 0}
     - target: {fileID: 5732422035270465901, guid: 45e2992e75570224696e26134a9b378e, type: 3}
       propertyPath: patrolPath.Array.data[0]
@@ -19095,10 +19095,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7235033145697230998, guid: b8acd8d00d8e9db4aa135e964d2dc584, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -20648,9 +20644,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 1.5
   m_Speed: 5
-  m_Acceleration: 90000
+  m_Acceleration: 100
   avoidancePriority: 50
-  m_AngularSpeed: 600
+  m_AngularSpeed: 500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -20658,7 +20654,7 @@ NavMeshAgent:
   m_Height: 1
   m_BaseOffset: 1.4
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 3
 --- !u!195 &544452035139542290
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -20670,9 +20666,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 1.5
   m_Speed: 5
-  m_Acceleration: 90000
+  m_Acceleration: 100
   avoidancePriority: 50
-  m_AngularSpeed: 600
+  m_AngularSpeed: 500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
