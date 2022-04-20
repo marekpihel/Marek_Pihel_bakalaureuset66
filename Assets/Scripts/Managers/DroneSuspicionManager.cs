@@ -56,6 +56,7 @@ public class DroneSuspicionManager : MonoBehaviour
         if (ShouldExpandSearchRadius())
         {
             searchRadius += 1;
+            soundReactionDistance += 1;
         }
     }
 
@@ -70,13 +71,11 @@ public class DroneSuspicionManager : MonoBehaviour
 
     private void AlertCloseDrones()
     {
-        int count = 0;
         foreach (DroneBehaviourController droneController in allDrones)
         {
             if (droneController.InAlertRange(lastPosition, soundReactionDistance))
             {
                 droneController.ReactToSound(lastPosition);
-                count += 1;
             }
         }
     }
