@@ -2671,11 +2671,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Escape the facility by disracting drones and sneaking. Distraction can
-    be achived by throwing objects or intensionally making louder sound. Footstep
-    sound range is proportional to the movement speed so sprinting makes a whole
-    lot more sound than sneaking. While in cell you dont generate any sound but can
-    still be discovered by drones.
+  m_Text: Escape the facility by distracting drones and sneaking. Distraction can
+    be achieved by throwing bottles or intensionally making louder sound. Footstep
+    sound range is proportional to the movement speed so sprinting makes a lot more
+    sound than sneaking. While in cell you are protected from drones.
 --- !u!222 &1053837736
 CanvasRenderer:
   m_ObjectHideFlags: 0

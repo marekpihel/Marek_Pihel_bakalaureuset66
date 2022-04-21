@@ -29,6 +29,9 @@ public class ScannerController : MonoBehaviour
                 loadingMainMenu = true;
                 GameObject.FindGameObjectWithTag("WinLossUI").GetComponent<WinLossScreenManager>().ActivateLossScreen();
             }
+            else {
+                print("Collided with: " + hit.collider.name);
+            }
         }
         
     }
