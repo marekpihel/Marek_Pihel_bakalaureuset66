@@ -2091,7 +2091,7 @@ MonoBehaviour:
     Shift
     - Sprint
 
-    Left CTRL - Sneak/Crouch'
+    Left CTRL / Space - Sneak'
 --- !u!222 &784848442
 CanvasRenderer:
   m_ObjectHideFlags: 0
